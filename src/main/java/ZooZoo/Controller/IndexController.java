@@ -10,13 +10,5 @@ public class IndexController {
     public String goToMain() {
         return "Main";
     }
-    @GetMapping("/Member/SignUp")
-    public String goToSighUp() {
-        return "Member/SignUp";
-    }
 
-//    @PostMapping("/Member/SignupController")
-//    public String SignupController(Memb) {
-//
-//    }
 }
