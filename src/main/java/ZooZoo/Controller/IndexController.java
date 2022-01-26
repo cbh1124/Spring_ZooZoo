@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class IndexController {
     @GetMapping("/")
     public String goToMain() {
-        return "Main";
+        return "Member/FindPw";
     }
 
 }
