@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class test {
 
-    private static final String FILENAME = "D:\\intellij-jyb\\Spring_ZooZoo\\src\\main\\resources\\static\\JS\\Api\\lossanimal.xml";
+    private static final String FILENAME = "D:\\intellij-workspace\\Spring_ZooZoo\\src\\main\\resources\\static\\JS\\Api\\lossanimal.xml";
 
     public static void main(String[] args) {
 
