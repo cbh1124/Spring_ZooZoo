@@ -1681,6 +1681,7 @@ section.meetings-page .pagination ul li a:hover {
 /* Meeting item column */
 .templatemo-item-col {
 	width: 31%;
+
 }
 
 @media (max-width: 992px) {
@@ -1694,6 +1695,7 @@ section.meetings-page .pagination ul li a:hover {
 		width: 100%;
 	}
 }
+
 
 /* 
 ---------------------------------------------
