@@ -2,7 +2,6 @@ package ZooZoo.Service.Loss;
 
 import ZooZoo.Domain.DTO.Board.LossDTO;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -16,9 +15,9 @@ import java.util.HashMap;
 
 @Service
 public class LossService {
-    public ArrayList<LossDTO> Loss(){
+    public ArrayList<LossDTO> Losslist() {
         StringBuilder result = new StringBuilder();
-        ArrayList<LossDTO> lossList = new ArrayList<>();
+        ArrayList<LossDTO> lossDTOS = new ArrayList<>();
 //        ArrayList<HashMap<String, String>> lossList = new ArrayList<HashMap<String, String>>();
         try {
             // max page = 110
@@ -76,19 +75,25 @@ public class LossService {
                     String specialMark = element.getElementsByTagName("specialMark").item(0).getTextContent();
                     String weight = element.getElementsByTagName("weight").item(0).getTextContent();
 
-                    LossDTO lossDTO = new LossDTO(
-                            age,careAddr,careNm,careTel,colorCd,desertionNo
-
-                    );
-                    lossList.add(lossDTO);
+                    // dto에 값 넣기
+                    LossDTO lossDTO = LossDTO.builder()
+                            .age(age).careAddr(careAddr).careNm(careNm).careTel(careTel).chargeNm(chargeNm)
+                            .colorCd(colorCd).desertionNo(desertionNo).filename(filename).happenDt(happenDt)
+                            .happenPlace(happenPlace).kindCd(kindCd).neuterYn(neuterYn).noticeEdt(noticeEdt)
+                            .noticeNo(noticeNo).noticeSdt(noticeSdt).officetel(officetel).orgNm(orgNm)
+                            .popfile(popfile).processState(processState).sexCd(sexCd).specialMark(specialMark)
+                            .weight(weight).build();
+                    lossDTOS.add(lossDTO);
                 }
             }
-            System.out.println(lossList);
+            // System.out.println(lossDTOS);
+            return lossDTOS;
 
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
-        return lossList;
+
     }
 
 }

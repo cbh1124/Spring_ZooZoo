@@ -28,7 +28,7 @@ public class MemberController {
             return "LogMain";
         } else {
 //            return "Main";
-            return "Board/Loss/test";
+            return "Board/Loss/LossBoardlist";
         }
     }
     // 로그인화면으로

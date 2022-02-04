@@ -1,8 +1,11 @@
 package ZooZoo.Controller.Board;
 
 import ZooZoo.Domain.DTO.Board.LossDTO;
+import ZooZoo.Service.Loss.LossService;
 import ZooZoo.Service.Share.ShareService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
@@ -10,6 +13,10 @@ import java.util.HashMap;
 
 @Controller
 public class BoardController {
+
+    @Autowired
+    LossService lossService;
+
     // 분양게시판으로
     @GetMapping("/ShareBoardList")
     public String goToShareBoardList() {
@@ -27,16 +34,10 @@ public class BoardController {
 
     // 유기게시판으로
     @GetMapping("/LossBoardlist")
-    public String goToLossBoardList() {
+    public String goToLossBoardList(Model model) {
 
-        LossDTO lossDTO = new LossDTO();
-        ArrayList<LossDTO> lossDTOS = new ArrayList<>();
-        HashMap<Integer, String> hashMap = new HashMap<>();
-        for (int i = 0; i < 110; i++) {
-
-        }
-
-
+        ArrayList<LossDTO> lossDTOS = lossService.Losslist();
+        model.addAttribute("lossDTOS",lossDTOS);
         return "Board/Loss/LossBoardlist";
     }
 
