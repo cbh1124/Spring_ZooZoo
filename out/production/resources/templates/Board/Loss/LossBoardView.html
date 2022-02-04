@@ -55,7 +55,6 @@
                                     <span th:text="${lossDTO.PBLANC_IDNTFY_NO}">공고번호</span>
                                 </div>
                                 <a href="meeting-details.html">
-                                    <!--<img th:src="@{/assets/images/single-meeting.jpg}" alt="">-->
                                     <img th:src="${lossDTO.IMAGE_COURS}" alt="" style="height:800px;">
                                 </a>
                             </div>
@@ -64,20 +63,42 @@
                                     <h4 th:text="${lossDTO.SPECIES_NM}">품종</h4>
                                 </a>
                                 <p>상태 : <span th:text="${lossDTO.STATE_NM}"></span></p>
-                                <p class="description">
-                                    공고번호 : <span th:text="${lossDTO.PBLANC_IDNTFY_NO}"></span><br>
-                                    나이 : <span th:text="${lossDTO.AGE_INFO}"></span><br>
-                                    체중 : <span th:text="${lossDTO.BDWGH_INFO}"></span><br>
-                                    색상 : <span th:text="${lossDTO.COLOR_NM}"></span><br>
-                                    성별 : <span th:text="${lossDTO.SEX_NM}"></span><br>
-                                    중성화여부 : <span th:text="${lossDTO.NEUT_YN}"></span><br>
-                                    특징 : <span th:text="${lossDTO.SFETR_INFO}"></span><br>
-                                    접수일시 : <span th:text="${lossDTO.RECEPT_DE}"></span><br>
-                                    발견장소 : <span th:text="${lossDTO.DISCVRY_PLC_INFO}"></span><br>
-                                    공고기간 : <span th:text="${lossDTO.PBLANC_BEGIN_DE}"></span> ~
-                                    <span th:text="${lossDTO.PBLANC_END_DE}"></span><br>
-                                    보호장소 : <span th:text="${lossDTO.PROTECT_PLC}"></span>
-                                </p>
+                                <table class="table">
+                                    <tr>
+                                        <td>공고번호</td><td th:text="${lossDTO.PBLANC_IDNTFY_NO}">></td>
+                                    </tr>
+                                    <tr>
+                                        <td>나이</td><td th:text="${lossDTO.AGE_INFO}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>체중</td><td th:text="${lossDTO.BDWGH_INFO}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>색상</td><td th:text="${lossDTO.COLOR_NM}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>성별</td><td th:text="${lossDTO.SEX_NM}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>중성화여부</td><td th:text="${lossDTO.NEUT_YN}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>특징</td><td th:text="${lossDTO.SFETR_INFO}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>접수일시</td><td th:text="${lossDTO.RECEPT_DE}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>발견장소</td><td th:text="${lossDTO.DISCVRY_PLC_INFO}"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>공고기간</td><td ><span th:text="${lossDTO.PBLANC_BEGIN_DE}"></span> ~
+                                        <span th:text="${lossDTO.PBLANC_END_DE}"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>보호장소</td><td th:text="${lossDTO.PROTECT_PLC}"></td>
+                                    </tr>
+                                </table>
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <div class="hours">
