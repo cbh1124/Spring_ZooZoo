@@ -55,14 +55,13 @@
                 <div class="meeting-item">
                     <div class="thumb">
                         <a th:href="@{/Board/Loss/LossBoardView}">
-                            <img th:src="${lossDTO.filename}" alt="">
+                            <img th:src="${lossDTO.filename}" alt="" style="height:200px;">
                         </a>
                     </div>
                     <div class="down-content">
                         <a href="meeting-details.html">
                             <h4 th:text="${lossDTO.kindCd}">품종</h4><br>
                         </a>
-                        접수일 : <span th:text="${lossDTO.happenDt}"></span><br>
                         나이 : <span th:text="${lossDTO.age}"></span><br>
                         몸무게 : <span th:text="${lossDTO.weight}"></span><br>
                         성별 : <span th:text="${lossDTO.sexCd}"></span><br>
@@ -145,20 +144,6 @@
         $(window).scroll(function () {
           checkSection();
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </script>
