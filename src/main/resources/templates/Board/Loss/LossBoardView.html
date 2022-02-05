@@ -35,9 +35,9 @@
 <section class="heading-page header-text" id="top">
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <h6>Get all details</h6>
-                <h2>Boardview (게시판 제목)</h2>
+            <div class="col-lg-12" style="color : white;">
+                <h2>유기동물 입양</h2>
+                <h5>개나 고양이를 키우고 싶다면 유기동물 보호시설에서 보호하고 있는 유기동물을 입양하는게 어떨까요?</h5>
             </div>
         </div>
     </div>
@@ -63,7 +63,7 @@
                                     <h4 th:text="${lossDTO.SPECIES_NM}">품종</h4>
                                 </a>
                                 <p>상태 : <span th:text="${lossDTO.STATE_NM}"></span></p>
-                                <table class="table">
+                                <table class="table" style="margin-bottom : 16px;">
                                     <tr>
                                         <td>공고번호</td><td th:text="${lossDTO.PBLANC_IDNTFY_NO}">></td>
                                     </tr>
@@ -104,6 +104,8 @@
                                         <div class="hours">
                                             <h5>관할보호센터</h5>
                                             <p th:text="${lossDTO.SHTER_NM}"></p>
+                                        </div>
+                                        <div class="hours">
                                             <h5>관할기관</h5>
                                             <p th:text="${lossDTO.JURISD_INST_NM}"></p>
                                         </div>
@@ -143,15 +145,15 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="main-button-red">
-                            <a href="meetings.html">Back To Meetings List</a>
+                            <a th:href="@{/LossBoardlist}">뒤로가기</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div th:replace="Footer.html :: footer"></div>
 </section>
+<div th:replace="Footer.html :: footer"></div>
 
 <!-- Scripts -->
 <!-- Bootstrap core JavaScript -->
