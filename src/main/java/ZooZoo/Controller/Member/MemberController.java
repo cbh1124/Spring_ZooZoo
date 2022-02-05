@@ -27,7 +27,8 @@ public class MemberController {
         if(session.getAttribute("loginDTO") != null) {
             return "LogMain";
         } else {
-            return "Main";
+//            return "Main";
+            return "Board/Loss/LossBoardlist";
         }
     }
     // 로그인화면으로
