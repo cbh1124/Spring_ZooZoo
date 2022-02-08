@@ -1,6 +1,9 @@
 package ZooZoo.Service.Loss;
 
 import ZooZoo.Domain.DTO.Board.LossDTO;
+import ZooZoo.Domain.DTO.Pagination;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -17,6 +20,7 @@ import java.util.HashMap;
 public class LossService {
 
     public ArrayList<LossDTO> Losslist() {
+
         ArrayList<LossDTO> lossDTOS = new ArrayList<>();
         try {
             // max page = 110
@@ -29,7 +33,6 @@ public class LossService {
 
             // parse XML file
             DocumentBuilder db = dbf.newDocumentBuilder();
-
             Document doc = db.parse(urlStr);
 
             // optional, but recommended
@@ -37,7 +40,7 @@ public class LossService {
 
             // get <staff>
             NodeList list = doc.getElementsByTagName("row");
-            int totalcount = 0;
+            int totalcount = 0; // total 개수
             for (int temp = 0; temp < list.getLength(); temp++) {
 
                 Node node = list.item(temp);
@@ -115,14 +118,40 @@ public class LossService {
                     totalcount++; // count 1개 +
                 }
             }
-            System.out.println(totalcount);
-            return lossDTOS;
+
+            return lossDTOS; // pageable 반환값???
 
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
 
+    }
+
+    // 페이징 처리 값 가져와서
+    public ArrayList<LossDTO> parsenum(ArrayList<LossDTO> parses, int page) {
+        ArrayList<LossDTO> parsepage = new ArrayList<>();
+        Pagination pagination = new Pagination();
+        /*시작 페이지 값을 가져온다*/
+        /*int page */
+        /*화면에 뿌릴 페이지 사이즈 가져오기 */
+        int pagesize = pagination.getPageSize();
+        // 끝 페이지
+        int maxPage = page * pagesize;
+        if (maxPage > parses.size()) {
+            maxPage = parses.size();
+        }
+        // 시작페이지
+        int minPage = (maxPage - pagesize) + 1;  // maxPage - maxpage-pagesize   1000 -
+
+        System.out.println("시작 페이지 입니다." + minPage);
+        System.out.println("마지막 페이지 입니다." + maxPage);
+
+        for (int i = minPage - 1; i < maxPage; i++) {
+            parsepage.add(parses.get(i));
+        }
+
+        return parsepage;
     }
 
 

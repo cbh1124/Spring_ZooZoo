@@ -1,6 +1,7 @@
 package ZooZoo.Controller.Board;
 
 import ZooZoo.Domain.DTO.Board.LossDTO;
+import ZooZoo.Domain.DTO.Pagination;
 import ZooZoo.Service.Loss.LossService;
 import ZooZoo.Service.Share.ShareService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 @Controller
 public class BoardController {
@@ -36,10 +36,15 @@ public class BoardController {
 
     // 유기게시판으로
     @GetMapping("/LossBoardlist")
-    public String goToLossBoardList(Model model) {
+    public String goToLossBoardList(Model model, @RequestParam(defaultValue = "1") int page) {
 
-        ArrayList<LossDTO> lossDTOS = lossService.Losslist();
-        model.addAttribute("lossDTOS",lossDTOS);
+        ArrayList<LossDTO> parses = lossService.Losslist(); // 전체 게시물
+        ArrayList<LossDTO> parsesPage = lossService.parsenum(parses, page); // 페이징
+
+        Pagination pagination = new Pagination(parses.size(), page);
+
+        model.addAttribute("parsesPage",parsesPage);
+        model.addAttribute("pagination",pagination);
         return "Board/Loss/LossBoardlist";
     }
 
