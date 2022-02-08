@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 
@@ -36,9 +37,10 @@ public class BoardController {
 
     // 유기게시판으로
     @GetMapping("/LossBoardlist")
-    public String goToLossBoardList(Model model, @RequestParam(defaultValue = "1") int page) {
+    @ResponseBody
+    public String goToLossBoardList(Model model, @RequestParam(defaultValue = "1") int page, @RequestParam("key") String key) {
 
-        ArrayList<LossDTO> parses = lossService.Losslist(); // 전체 게시물
+        ArrayList<LossDTO> parses = lossService.Losslist(String key); // 전체 게시물
         ArrayList<LossDTO> parsesPage = lossService.parsenum(parses, page); // 페이징
 
         Pagination pagination = new Pagination(parses.size(), page);
@@ -48,13 +50,13 @@ public class BoardController {
         return "Board/Loss/LossBoardlist";
     }
 
-    // 상세페이지로
-    @GetMapping("/Board/Loss/LossBoardView/{ABDM_IDNTFY_NO}")
-    public String goToLossBoardView(Model model, @PathVariable("ABDM_IDNTFY_NO") String ABDM_IDNTFY_NO) {
-        ArrayList<LossDTO> lossDTOS = lossService.getlossboard(ABDM_IDNTFY_NO);
-        model.addAttribute("lossDTOS",lossDTOS);
-        return "Board/Loss/LossBoardView";
-    }
+//    // 상세페이지로
+//    @GetMapping("/Board/Loss/LossBoardView/{ABDM_IDNTFY_NO}")
+//    public String goToLossBoardView(Model model, @PathVariable("ABDM_IDNTFY_NO") String ABDM_IDNTFY_NO) {
+//        ArrayList<LossDTO> lossDTOS = lossService.getlossboard(ABDM_IDNTFY_NO);
+//        model.addAttribute("lossDTOS",lossDTOS);
+//        return "Board/Loss/LossBoardView";
+//    }
 
     @GetMapping("/Board/Share/ShareBoardView")
     public String goToShareBoardView() {

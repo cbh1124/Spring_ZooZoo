@@ -2,8 +2,6 @@ package ZooZoo.Service.Loss;
 
 import ZooZoo.Domain.DTO.Board.LossDTO;
 import ZooZoo.Domain.DTO.Pagination;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,7 +17,7 @@ import java.util.HashMap;
 @Service
 public class LossService {
 
-    public ArrayList<LossDTO> Losslist() {
+    public ArrayList<LossDTO> Losslist(String key) {
 
         ArrayList<LossDTO> lossDTOS = new ArrayList<>();
         try {
@@ -65,7 +63,17 @@ public class LossService {
                     String PBLANC_END_DE = element.getElementsByTagName("PBLANC_END_DE").item(0).getTextContent();
                     String IMAGE_COURS = element.getElementsByTagName("IMAGE_COURS").item(0).getTextContent();
                     String STATE_NM = element.getElementsByTagName("STATE_NM").item(0).getTextContent();
-                    String SEX_NM = element.getElementsByTagName("SEX_NM").item(0).getTextContent();
+                    String SEX_NM = null;
+                    if (key == null){
+                        SEX_NM = element.getElementsByTagName("SEX_NM").item(0).getTextContent();
+                    } else {
+                        if (key.equals("female")){
+                            SEX_NM = element.getElementsByTagName("F").item(0).getTextContent();
+                        }
+                    }
+
+
+
                     String NEUT_YN = element.getElementsByTagName("NEUT_YN").item(0).getTextContent();
                     String SFETR_INFO = element.getElementsByTagName("SFETR_INFO").item(0).getTextContent();
                     String SHTER_NM = element.getElementsByTagName("SHTER_NM").item(0).getTextContent();
@@ -155,46 +163,49 @@ public class LossService {
     }
 
 
-    public ArrayList<LossDTO> getlossboard(String ABDM_IDNTFY_NO) {
-        ArrayList<LossDTO> lossDTOS = Losslist();
-        ArrayList<LossDTO> getlossDTOS = new ArrayList<>();
-        for (int i = 0; i < lossDTOS.size(); i++) {
-            if (lossDTOS.get(i).getABDM_IDNTFY_NO().equals(ABDM_IDNTFY_NO)) {
-                LossDTO lossDTO = LossDTO.builder()
-                        .SIGUN_CD(lossDTOS.get(i).getSIGUN_CD())
-                        .SIGUN_NM(lossDTOS.get(i).getSIGUN_NM())
-                        .ABDM_IDNTFY_NO(lossDTOS.get(i).getABDM_IDNTFY_NO())
-                        .THUMB_IMAGE_COURS(lossDTOS.get(i).getTHUMB_IMAGE_COURS())
-                        .RECEPT_DE(lossDTOS.get(i).getRECEPT_DE())
-                        .DISCVRY_PLC_INFO(lossDTOS.get(i).getDISCVRY_PLC_INFO())
-                        .SPECIES_NM(lossDTOS.get(i).getSPECIES_NM())
-                        .COLOR_NM(lossDTOS.get(i).getCOLOR_NM())
-                        .AGE_INFO(lossDTOS.get(i).getAGE_INFO())
-                        .BDWGH_INFO(lossDTOS.get(i).getBDWGH_INFO())
-                        .PBLANC_IDNTFY_NO(lossDTOS.get(i).getPBLANC_IDNTFY_NO())
-                        .PBLANC_BEGIN_DE(lossDTOS.get(i).getPBLANC_BEGIN_DE())
-                        .PBLANC_END_DE(lossDTOS.get(i).getPBLANC_END_DE())
-                        .IMAGE_COURS(lossDTOS.get(i).getIMAGE_COURS())
-                        .STATE_NM(lossDTOS.get(i).getSTATE_NM())
-                        .SEX_NM(lossDTOS.get(i).getSEX_NM())
-                        .NEUT_YN(lossDTOS.get(i).getNEUT_YN())
-                        .SFETR_INFO(lossDTOS.get(i).getSFETR_INFO())
-                        .SHTER_NM(lossDTOS.get(i).getSHTER_NM())
-                        .SHTER_TELNO(lossDTOS.get(i).getSHTER_TELNO())
-                        .PROTECT_PLC(lossDTOS.get(i).getPROTECT_PLC())
-                        .JURISD_INST_NM(lossDTOS.get(i).getJURISD_INST_NM())
-                        .CHRGPSN_NM(lossDTOS.get(i).getCHRGPSN_NM())
-                        .CHRGPSN_CONTCT_NO(lossDTOS.get(i).getCHRGPSN_CONTCT_NO())
-                        .PARTCLR_MATR(lossDTOS.get(i).getPARTCLR_MATR())
-                        .REFINE_LOTNO_ADDR(lossDTOS.get(i).getREFINE_LOTNO_ADDR())
-                        .REFINE_ROADNM_ADDR(lossDTOS.get(i).getREFINE_ROADNM_ADDR())
-                        .REFINE_ZIP_CD(lossDTOS.get(i).getREFINE_ZIP_CD())
-                        .REFINE_WGS84_LOGT(lossDTOS.get(i).getREFINE_WGS84_LOGT())
-                        .REFINE_WGS84_LAT(lossDTOS.get(i).getREFINE_WGS84_LAT())
-                        .build();
-                getlossDTOS.add(lossDTO);
-            }
-        }
-        return getlossDTOS;
-    }
+
+
+
+//    public ArrayList<LossDTO> getlossboard(String ABDM_IDNTFY_NO) {
+//        ArrayList<LossDTO> lossDTOS = Losslist();
+//        ArrayList<LossDTO> getlossDTOS = new ArrayList<>();
+//        for (int i = 0; i < lossDTOS.size(); i++) {
+//            if (lossDTOS.get(i).getABDM_IDNTFY_NO().equals(ABDM_IDNTFY_NO)) {
+//                LossDTO lossDTO = LossDTO.builder()
+//                        .SIGUN_CD(lossDTOS.get(i).getSIGUN_CD())
+//                        .SIGUN_NM(lossDTOS.get(i).getSIGUN_NM())
+//                        .ABDM_IDNTFY_NO(lossDTOS.get(i).getABDM_IDNTFY_NO())
+//                        .THUMB_IMAGE_COURS(lossDTOS.get(i).getTHUMB_IMAGE_COURS())
+//                        .RECEPT_DE(lossDTOS.get(i).getRECEPT_DE())
+//                        .DISCVRY_PLC_INFO(lossDTOS.get(i).getDISCVRY_PLC_INFO())
+//                        .SPECIES_NM(lossDTOS.get(i).getSPECIES_NM())
+//                        .COLOR_NM(lossDTOS.get(i).getCOLOR_NM())
+//                        .AGE_INFO(lossDTOS.get(i).getAGE_INFO())
+//                        .BDWGH_INFO(lossDTOS.get(i).getBDWGH_INFO())
+//                        .PBLANC_IDNTFY_NO(lossDTOS.get(i).getPBLANC_IDNTFY_NO())
+//                        .PBLANC_BEGIN_DE(lossDTOS.get(i).getPBLANC_BEGIN_DE())
+//                        .PBLANC_END_DE(lossDTOS.get(i).getPBLANC_END_DE())
+//                        .IMAGE_COURS(lossDTOS.get(i).getIMAGE_COURS())
+//                        .STATE_NM(lossDTOS.get(i).getSTATE_NM())
+//                        .SEX_NM(lossDTOS.get(i).getSEX_NM())
+//                        .NEUT_YN(lossDTOS.get(i).getNEUT_YN())
+//                        .SFETR_INFO(lossDTOS.get(i).getSFETR_INFO())
+//                        .SHTER_NM(lossDTOS.get(i).getSHTER_NM())
+//                        .SHTER_TELNO(lossDTOS.get(i).getSHTER_TELNO())
+//                        .PROTECT_PLC(lossDTOS.get(i).getPROTECT_PLC())
+//                        .JURISD_INST_NM(lossDTOS.get(i).getJURISD_INST_NM())
+//                        .CHRGPSN_NM(lossDTOS.get(i).getCHRGPSN_NM())
+//                        .CHRGPSN_CONTCT_NO(lossDTOS.get(i).getCHRGPSN_CONTCT_NO())
+//                        .PARTCLR_MATR(lossDTOS.get(i).getPARTCLR_MATR())
+//                        .REFINE_LOTNO_ADDR(lossDTOS.get(i).getREFINE_LOTNO_ADDR())
+//                        .REFINE_ROADNM_ADDR(lossDTOS.get(i).getREFINE_ROADNM_ADDR())
+//                        .REFINE_ZIP_CD(lossDTOS.get(i).getREFINE_ZIP_CD())
+//                        .REFINE_WGS84_LOGT(lossDTOS.get(i).getREFINE_WGS84_LOGT())
+//                        .REFINE_WGS84_LAT(lossDTOS.get(i).getREFINE_WGS84_LAT())
+//                        .build();
+//                getlossDTOS.add(lossDTO);
+//            }
+//        }
+//        return getlossDTOS;
+//    }
 }
