@@ -58,6 +58,8 @@ public class LossService {
                     String DISCVRY_PLC_INFO = element.getElementsByTagName("DISCVRY_PLC_INFO").item(0).getTextContent();
 
                     String SPECIES_NM = element.getElementsByTagName("SPECIES_NM").item(0).getTextContent();
+                    SPECIES_NM = SPECIES_NM.replace("[", "");
+                    String result = SPECIES_NM.split("] ")[0];
 
                     String COLOR_NM = element.getElementsByTagName("COLOR_NM").item(0).getTextContent();
                     String AGE_INFO = element.getElementsByTagName("AGE_INFO").item(0).getTextContent();
@@ -91,7 +93,7 @@ public class LossService {
                             .THUMB_IMAGE_COURS(THUMB_IMAGE_COURS)
                             .RECEPT_DE(RECEPT_DE)
                             .DISCVRY_PLC_INFO(DISCVRY_PLC_INFO)
-                            .SPECIES_NM(SPECIES_NM)
+                            .SPECIES_NM(result)
                             .COLOR_NM(COLOR_NM)
                             .AGE_INFO(AGE_INFO)
                             .BDWGH_INFO(BDWGH_INFO)
