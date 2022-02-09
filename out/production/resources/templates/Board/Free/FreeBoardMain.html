@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
-    <title>Education - List of Meetings</title>
+    <title>Zoozoo Club - 자유게시판</title>
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
@@ -52,12 +52,12 @@
             </div>
         </div>
         <hr><br>
-        <div class="row">
+        <div class="row" id="boardbox">
             <div class="col-lg-12">
                 <div class="row">
                     <div class="d-flex justify-content-end my-0">
                         <a th:href="@{/Board/FreeBoardWrite}">
-                            <button type="submit" class="btn btn-lg bg-gradient-dark mb-0">
+                            <button type="submit" class="btn btn bg-gradient-dark mb-0">
                                 <div class="d-flex align-items-center">
                                     <i class="material-icons me-2" aria-hidden="true">edit</i>
                                     글쓰기
@@ -67,60 +67,33 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="row grid mt-3">
-                            <div class="col-lg-4 templatemo-item-col all soon mt-3">
+
+                            <div th:each="freeboard : ${freeboard}"  class="col-lg-4 templatemo-item-col all soon mt-3">
                                 <div class="meeting-item">
                                     <div class="thumb">
                                         <div class="price">
                                             <span>$14.00</span>
                                         </div>
-                                        <a th:href="@{/Board/Free/FreeBoardView}"><img th:src="@{/assets/images/meeting-01.jpg}" alt=""></a>
+                                        <a th:href="@{/Board/Free/FreeBoardView}"><img th:src="@{'/IMG/Board/FreeBoardIMG/'+${freeboard.getBfile().get(0)}}" alt="" style="height: 200px;  object-fit: cover; background-color: #1d1e19;"></a>
                                     </div>
-                                    <div class="down-content">
+                                    <div class="down-content" style="height:150px;">
                                         <div class="date">
-                                            <h6>Nov <span>12</span></h6>
+                                            <h6 class="mb-0" th:text="${#strings.listSplit(freeboard.getBcreateddate,'-')[1]}"> </h6>
+                                            <span class="mt-0" th:text="${#strings.listSplit(freeboard.getBcreateddate,'-')[2]}" style="font-size:0.8"></span>
                                         </div>
-                                        <a href="meeting-details.html"><h4>New Lecturers Meeting</h4></a>
-                                        <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 templatemo-item-col all soon mt-3">
-                                <div class="meeting-item">
-                                    <div class="thumb">
-                                        <div class="price">
-                                            <span>$14.00</span>
-                                        </div>
-                                        <a th:href="@{/Board/Free/FreeBoardView}"><img th:src="@{/assets/images/meeting-01.jpg}" alt=""></a>
-                                    </div>
-                                    <div class="down-content">
-                                        <div class="date">
-                                            <h6>Nov <span>12</span></h6>
-                                        </div>
-                                        <a href="meeting-details.html"><h4>New Lecturers Meeting</h4></a>
-                                        <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 templatemo-item-col all soon mt-3">
-                                <div class="meeting-item">
-                                    <div class="thumb">
-                                        <div class="price">
-                                            <span>$14.00</span>
-                                        </div>
-                                        <a th:href="@{/Board/Free/FreeBoardView}"><img th:src="@{/assets/images/meeting-01.jpg}" alt=""></a>
-                                    </div>
-                                    <div class="down-content">
-                                        <div class="date">
-                                            <h6>Nov <span>12</span></h6>
-                                        </div>
-                                        <a href="meeting-details.html"><h4>New Lecturers Meeting</h4></a>
-                                        <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
+                                        <a href="meeting-details.html">
+                                            <h4  th:if="${freeboard.getBtitle.length > 18}"  th:text="${#strings.substring(freeboard.getBtitle(),0,18)+'...'}"></h4>
+                                            <h4 th:unless="${freeboard.getBtitle.length > 18}"  th:text="${freeboard.getBtitle()}"></h4>
+                                        </a>
+                                        <p id="FBcontentsP" th:if="${freeboard.getBcontents.length > 22}" th:utext="${#strings.substring(freeboard.getBcontents(),0,22)+'...'}"></p>
+                                        <p id="FBcontentsP2" th:unless="${freeboard.getBcontents.length > 22}" th:utext="${freeboard.getBcontents()}"></p>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
                     </div>
+
                     <div class="col-lg-12">
                         <div class="pagination">
                             <ul>

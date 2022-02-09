@@ -29,134 +29,73 @@
 </head>
 
 <body style="  background-color: #ff7f50;">
-
 <div th:replace="Header.html :: header"></div>
-
-<section class="meetings-page" id="meetings">
-  <div class="container">
-    <div class = "row">
-      <div class = "col-md-3">
-        <a th:href = "@{/LossBoardlist}"><h4 class = "text-center">유기</h4></a>
-      </div>
-      <div class = "col-md-3">
-        <a th:href = "@{/ShareBoardList}"><h4 class = "text-center">분양</h4></a>
-      </div>
-      <div class = "col-md-3">
-        <a th:href = "@{/hospitalboard}"><h4 class = "text-center">병원</h4></a>
-      </div>
-      <div class = "col-md-3">
-        <a th:href = "@{/freeboard}"><h4 class = "text-center">자유</h4></a>
-      </div>
+<div class="container">
+  <div class = "row">
+    <div class = "col-md-3">
+      <a th:href = "@{/LossBoardlist}"><h4 class = "text-center">유기</h4></a>
     </div>
-    <hr><br>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="row grid">
-              <div class="col-lg-4 templatemo-item-col all soon">
-                <div class="meeting-item">
-                  <div class="thumb">
-                    <div class="price">
-                      <span>$14.00</span>
-                    </div>
-                    <a th:href="@{/Board/Share/ShareBoardView}"><img th:src="@{/assets/images/meeting-01.jpg}" alt=""></a>
-                  </div>
-                  <div class="down-content">
-                    <div class="date">
-                      <h6>Nov <span>12</span></h6>
-                    </div>
-                    <a href="meeting-details.html"><h4>New Lecturers Meeting</h4></a>
-                    <p>Morbi in libero blandit lectus<br>cursus ullamcorper.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-12">
-            <div class="pagination">
-              <ul>
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class = "col-md-3">
+      <a th:href = "@{/ShareBoardList}"><h4 class = "text-center">분양</h4></a>
+    </div>
+    <div class = "col-md-3">
+      <a th:href = "@{/hospitalboard}"><h4 class = "text-center">병원</h4></a>
+    </div>
+    <div class = "col-md-3">
+      <a th:href = "@{/freeboard}"><h4 class = "text-center">자유</h4></a>
     </div>
   </div>
-  <div th:replace="Footer.html :: footer"></div>
-</section>
-
-
-
-<!-- Scripts -->
-<!-- Bootstrap core JavaScript -->
-<script th:src="@{/vendor/jquery/jquery.min.js}" type="text/javascript"></script>
-<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}" type="text/javascript"></script>
-<script th:src="@{/assets/js/isotope.min.js}" type="text/javascript"></script>
-<script th:src="@{/assets/js/owl-carousel.js}" type="text/javascript"></script>
-<script th:src="@{/assets/js/lightbox.js}" type="text/javascript"></script>
-<script th:src="@{/assets/js/tabs.js}" type="text/javascript"></script>
-<script th:src="@{/assets/js/isotope.js}" type="text/javascript"></script>
-<script th:src="@{/assets/js/video.js}" type="text/javascript"></script>
-<script th:src="@{/assets/js/slick-slider.js}" type="text/javascript"></script>
-<script th:src="@{/assets/js/custom.js}" type="text/javascript"></script>
-
-
-<script>
-        //according to loftblog tut
-        $('.nav li:first').addClass('active');
-
-        var showSection = function showSection(section, isAnimate) {
-          var
-          direction = section.replace(/#/, ''),
-          reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-          reqSectionPos = reqSection.offset().top - 0;
-
-          if (isAnimate) {
-            $('body, html').animate({
-              scrollTop: reqSectionPos },
-            800);
-          } else {
-            $('body, html').scrollTop(reqSectionPos);
-          }
-
-        };
-
-        var checkSection = function checkSection() {
-          $('.section').each(function () {
-            var
-            $this = $(this),
-            topEdge = $this.offset().top - 80,
-            bottomEdge = topEdge + $this.height(),
-            wScroll = $(window).scrollTop();
-            if (topEdge < wScroll && bottomEdge > wScroll) {
-              var
-              currentId = $this.data('section'),
-              reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-              reqLink.closest('li').addClass('active').
-              siblings().removeClass('active');
-            }
-          });
-        };
-
-        $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
-          e.preventDefault();
-          showSection($(this).attr('href'), true);
-        });
-
-        $(window).scroll(function () {
-          checkSection();
-        });
-
-
-</script>
+</div>
+<hr><br>
+<div class = "container">
+  <select>
+    <option>시/도</option>
+    <div th:each = "select : ${select}">
+      <option th:text = "${select}">시/도</option>
+    </div>
+  </select>
+  <table class = "table">
+    <tr class = "row">
+      <th class = "col-md-1 text-center">번호</th><th class = "col-md-5 text-center">가게명</th><th class = "col-md-5 text-center">주소</th>
+    </tr>
+    <tr class = "row" th:each = "share : ${share}">
+      <td class = "col-md-1 text-center" th:text = "${share.shareno}"></td><td class = "col-md-5 text-center"><a th:text = "${share.sharename}" th:href = "@{'/ShareBoardView/' + ${share.shareno} + ${share}}"></a></td><td class = "col-md-5 text-center" th:text = "${share.shareaddress}"></td>
+    </tr>
+  </table>
+</div>
+<br>
+<!--paging button-->
+<nav aria-label="Page navigation example" class = "d-flex justify-content-center">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" th:href="@{/ShareBoardList?page=1}" aria-label="Previous">
+        <span aria-hidden="true"><<</span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" th:href="@{/ShareBoardList?page={page} (page = ${pagination.prevBlock})}" aria-label="Previous">
+        <span aria-hidden="true"><</span>
+      </a>
+    </li>
+    <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+      <li class="page-item"
+          th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+          th:each="pageButton : ${#numbers.sequence(start, end)}">
+        <a class="page-link" th:href="@{/ShareBoardList?page={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+      </li>
+    </th:block>
+    <li class="page-item">
+      <a class="page-link" th:href="@{/ShareBoardList?page={page} (page = ${pagination.nextBlock})}" aria-label="Next">
+        <span aria-hidden="true">></span>
+      </a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" th:href="@{/ShareBoardList?page={page} (page = ${pagination.totalPageCnt})}" aria-label="Previous">
+        <span aria-hidden="true">>></span>
+      </a>
+    </li>
+  </ul>
+</nav>
+<div th:replace = "Footer.html :: footer"></div>
 </body>
-
-
-</body>
-
 </html>

@@ -27,8 +27,7 @@ public class MemberController {
         if(session.getAttribute("loginDTO") != null) {
             return "LogMain";
         } else {
-//            return "Main";
-            return "Board/Loss/LossBoardlist";
+            return "Main";
         }
     }
     // 로그인화면으로
@@ -91,7 +90,7 @@ public class MemberController {
         if(memail.equals("") || memail == null || mname.equals("") || mname == null){
             return "1";
         }else{
-           String result = memberService.FindId(memail, mname);
+            String result = memberService.FindId(memail, mname);
             if(result != null && !result.equals("")){
                 return result;
                 //동일한 회원 정보가 없으면
