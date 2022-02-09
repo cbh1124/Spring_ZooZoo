@@ -97,7 +97,15 @@ public class BoardController {
     @GetMapping("/LossBoardlist")
     public String goToLossBoardList(Model model, @RequestParam(defaultValue = "1") int page) {
 
-        ArrayList<LossDTO> parses = lossService.Losslist(); // 전체 게시물
+        String keyword = request.getParameter("keyword"); // 성별
+        HttpSession session = request.getSession();
+        if( keyword!=null){
+            session.setAttribute("keyword" , keyword);
+        }else{
+            keyword =  (String) session.getAttribute("keyword");
+        }
+
+        ArrayList<LossDTO> parses = lossService.losslist(keyword); // 전체 게시물
         ArrayList<LossDTO> parsesPage = lossService.parsenum(parses, page); // 페이징
 
         Pagination pagination = new Pagination(parses.size(), page);
@@ -108,6 +116,7 @@ public class BoardController {
     }
 
 
+
     // 상세페이지로
     @GetMapping("/Board/Loss/LossBoardView/{ABDM_IDNTFY_NO}")
     public String goToLossBoardView(Model model, @PathVariable("ABDM_IDNTFY_NO") String ABDM_IDNTFY_NO) {
@@ -115,6 +124,8 @@ public class BoardController {
         model.addAttribute("lossDTOS",lossDTOS);
         return "Board/Loss/LossBoardView";
     }
+
+
     @GetMapping("/Board/Free/FreeBoardView")public String goToFreeBoardView() {return "Board/Free/FreeBoardView";}
 
     @GetMapping("/ShareBoardView/{shareno}")

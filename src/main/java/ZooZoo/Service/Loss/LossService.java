@@ -2,12 +2,14 @@ package ZooZoo.Service.Loss;
 
 import ZooZoo.Domain.DTO.Board.LossDTO;
 import ZooZoo.Domain.DTO.Pagination;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,9 +19,11 @@ import java.util.HashMap;
 @Service
 public class LossService {
 
-    public ArrayList<LossDTO> Losslist() {
+    // 전체 리스트
+    public ArrayList<LossDTO> totlosslist() {
 
         ArrayList<LossDTO> lossDTOS = new ArrayList<>();
+
         try {
             // max page = 110
             String urlStr = "https://openapi.gg.go.kr/AbdmAnimalProtect?KEY=f116bb9347d04a38a639e01395505d21&pIndex=1&pSize=500";
@@ -38,7 +42,6 @@ public class LossService {
 
             // get <staff>
             NodeList list = doc.getElementsByTagName("row");
-            int totalcount = 0; // total 개수
             for (int temp = 0; temp < list.getLength(); temp++) {
 
                 Node node = list.item(temp);
@@ -46,7 +49,6 @@ public class LossService {
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element element = (Element) node;
-
                     // get text
                     String SIGUN_CD = element.getElementsByTagName("SIGUN_CD").item(0).getTextContent();
                     String SIGUN_NM = element.getElementsByTagName("SIGUN_NM").item(0).getTextContent();
@@ -54,7 +56,9 @@ public class LossService {
                     String THUMB_IMAGE_COURS = element.getElementsByTagName("THUMB_IMAGE_COURS").item(0).getTextContent();
                     String RECEPT_DE = element.getElementsByTagName("RECEPT_DE").item(0).getTextContent();
                     String DISCVRY_PLC_INFO = element.getElementsByTagName("DISCVRY_PLC_INFO").item(0).getTextContent();
+
                     String SPECIES_NM = element.getElementsByTagName("SPECIES_NM").item(0).getTextContent();
+
                     String COLOR_NM = element.getElementsByTagName("COLOR_NM").item(0).getTextContent();
                     String AGE_INFO = element.getElementsByTagName("AGE_INFO").item(0).getTextContent();
                     String BDWGH_INFO = element.getElementsByTagName("BDWGH_INFO").item(0).getTextContent();
@@ -113,17 +117,31 @@ public class LossService {
                             .REFINE_WGS84_LAT(REFINE_WGS84_LAT)
                             .build();
                     lossDTOS.add(lossDTO);
-                    totalcount++; // count 1개 +
                 }
             }
-
-            return lossDTOS; // pageable 반환값???
+            return lossDTOS;
 
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
 
+    // 필터링(조회)
+    public ArrayList<LossDTO> losslist(String keyword) {
+        LossOption lossOption = new LossOption();
+        ArrayList<LossDTO> totLosslist = totlosslist();
+        ArrayList<LossDTO> lossDTOS = lossOption.sexlist(keyword);
+        try {
+            if (keyword.equals("total")) {
+                return totLosslist;
+            } else {
+                return lossDTOS;
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
     }
 
     // 페이징 처리 값 가져와서
@@ -133,6 +151,7 @@ public class LossService {
         /*시작 페이지 값을 가져온다*/
         /*int page */
         /*화면에 뿌릴 페이지 사이즈 가져오기 */
+        pagination.setPageSize(12);
         int pagesize = pagination.getPageSize();
         // 끝 페이지
         int maxPage = page * pagesize;
@@ -149,8 +168,9 @@ public class LossService {
         return parsepage;
     }
 
+    // 상세페이지
     public ArrayList<LossDTO> getlossboard(String ABDM_IDNTFY_NO) {
-        ArrayList<LossDTO> lossDTOS = Losslist();
+        ArrayList<LossDTO> lossDTOS = totlosslist();
         ArrayList<LossDTO> getlossDTOS = new ArrayList<>();
         for (int i = 0; i < lossDTOS.size(); i++) {
             if (lossDTOS.get(i).getABDM_IDNTFY_NO().equals(ABDM_IDNTFY_NO)) {
@@ -191,7 +211,6 @@ public class LossService {
         }
         return getlossDTOS;
     }
-
 
 
 }

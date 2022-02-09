@@ -20,6 +20,10 @@ public class LossDTO {
     private String PBLANC_BEGIN_DE; //공고시작일자
     private String PBLANC_END_DE; //공고종료일자
     private String SPECIES_NM; //품종
+
+    private String kinds; // 종류
+    private String detail; // 세부
+
     private String COLOR_NM; //색상
     private String AGE_INFO; //나이
     private String BDWGH_INFO; //체중
