@@ -54,9 +54,7 @@
                                 <div class="price">
                                     <span th:text="${lossDTO.PBLANC_IDNTFY_NO}">공고번호</span>
                                 </div>
-                                <a href="meeting-details.html">
-                                    <img th:src="${lossDTO.IMAGE_COURS}" alt="" style="height:800px;">
-                                </a>
+                                <img th:src="${lossDTO.IMAGE_COURS}" alt="" style="height:800px;">
                             </div>
                             <div class="down-content">
                                 <a href="meeting-details.html">
@@ -65,41 +63,53 @@
                                 <p>상태 : <span th:text="${lossDTO.STATE_NM}"></span></p>
                                 <table class="table" style="margin-bottom : 16px;">
                                     <tr>
-                                        <td>공고번호</td><td th:text="${lossDTO.PBLANC_IDNTFY_NO}">></td>
+                                        <td>공고번호</td>
+                                        <td th:text="${lossDTO.PBLANC_IDNTFY_NO}">></td>
                                     </tr>
                                     <tr>
-                                        <td>품종</td><td th:text="${lossDTO.SPECIES_NM}">></td>
+                                        <td>품종</td>
+                                        <td th:text="${lossDTO.SPECIES_NM}">></td>
                                     </tr>
                                     <tr>
-                                        <td>나이</td><td th:text="${lossDTO.AGE_INFO}"></td>
+                                        <td>나이</td>
+                                        <td th:text="${lossDTO.AGE_INFO}"></td>
                                     </tr>
                                     <tr>
-                                        <td>체중</td><td th:text="${lossDTO.BDWGH_INFO}"></td>
+                                        <td>체중</td>
+                                        <td th:text="${lossDTO.BDWGH_INFO}"></td>
                                     </tr>
                                     <tr>
-                                        <td>색상</td><td th:text="${lossDTO.COLOR_NM}"></td>
+                                        <td>색상</td>
+                                        <td th:text="${lossDTO.COLOR_NM}"></td>
                                     </tr>
                                     <tr>
-                                        <td>성별</td><td th:text="${lossDTO.SEX_NM}"></td>
+                                        <td>성별</td>
+                                        <td th:text="${lossDTO.SEX_NM}"></td>
                                     </tr>
                                     <tr>
-                                        <td>중성화여부</td><td th:text="${lossDTO.NEUT_YN}"></td>
+                                        <td>중성화여부</td>
+                                        <td th:text="${lossDTO.NEUT_YN}"></td>
                                     </tr>
                                     <tr>
-                                        <td>특징</td><td th:text="${lossDTO.SFETR_INFO}"></td>
+                                        <td>특징</td>
+                                        <td th:text="${lossDTO.SFETR_INFO}"></td>
                                     </tr>
                                     <tr>
-                                        <td>접수일시</td><td th:text="${lossDTO.newRECEPT_DE}"></td>
+                                        <td>접수일시</td>
+                                        <td th:text="${lossDTO.newRECEPT_DE}"></td>
                                     </tr>
                                     <tr>
-                                        <td>발견장소</td><td th:text="${lossDTO.DISCVRY_PLC_INFO}"></td>
+                                        <td>발견장소</td>
+                                        <td th:text="${lossDTO.DISCVRY_PLC_INFO}"></td>
                                     </tr>
                                     <tr>
-                                        <td>공고기간</td><td ><span th:text="${lossDTO.newPBLANC_BEGIN_DE}"></span> ~
-                                        <span th:text="${lossDTO.newPBLANC_END_DE}"></span></td>
+                                        <td>공고기간</td>
+                                        <td><span th:text="${lossDTO.newPBLANC_BEGIN_DE}"></span> ~
+                                            <span th:text="${lossDTO.newPBLANC_END_DE}"></span></td>
                                     </tr>
                                     <tr>
-                                        <td>보호장소</td><td th:text="${lossDTO.PROTECT_PLC}"></td>
+                                        <td>보호장소</td>
+                                        <td th:text="${lossDTO.PROTECT_PLC}"></td>
                                     </tr>
                                 </table>
                                 <div class="row">
@@ -217,6 +227,7 @@
         $(window).scroll(function () {
           checkSection();
         });
+
 
 
 
