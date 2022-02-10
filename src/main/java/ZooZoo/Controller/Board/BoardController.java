@@ -99,26 +99,22 @@ public class BoardController {
 
         String sex = request.getParameter("sex"); // 성별
         String kind = request.getParameter("kind"); // 축종
-        String city = request.getParameter("city"); // 축종
+        String city = request.getParameter("city"); // 시군구
+        System.out.println(city);
         HttpSession session = request.getSession();
 
-        if (sex != null) {
+        if (sex != null || kind != null || city != null) {
             session.setAttribute("sex", sex);
-        } else {
-            sex = (String) session.getAttribute("sex");
-        }
-        if (kind != null) {
             session.setAttribute("kind", kind);
-        } else {
-            kind = (String) session.getAttribute("kind");
-        }
-        if (city != null) {
             session.setAttribute("city", city);
         } else {
+            sex = (String) session.getAttribute("sex");
+            kind = (String) session.getAttribute("kind");
             city = (String) session.getAttribute("city");
         }
 
-        ArrayList<LossDTO> parses = lossService.losslist(city); // 필터링 게시물
+        // 키워드 2개 넘기기
+        ArrayList<LossDTO> parses = lossService.losslist(sex, kind, city); // 필터링 게시물
         ArrayList<LossDTO> parsesPage = lossService.parsenum(parses, page); // 페이징
 
         Pagination pagination = new Pagination(parses.size(), page);

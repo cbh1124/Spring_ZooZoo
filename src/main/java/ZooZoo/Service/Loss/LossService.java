@@ -20,17 +20,15 @@ import java.util.HashMap;
 public class LossService {
 
     // 필터링(조회) 리스트
-    public ArrayList<LossDTO> losslist(String keyword) {
+    public ArrayList<LossDTO> losslist(String sex, String kind, String city) {
         LossOption lossOption = new LossOption();
         ArrayList<LossDTO> totLosslist = totlosslist();
-        ArrayList<LossDTO> sexlist = lossOption.sexlist(keyword);
-        ArrayList<LossDTO> kindlist = lossOption.kindlist(keyword);
-        ArrayList<LossDTO> citylist = lossOption.citylist(keyword);
+        ArrayList<LossDTO> sexlist = lossOption.sexlist(sex, kind, city);
         try {
-            if (keyword == null || keyword.equals("total")) {
-                return totLosslist;
+            if ((sex == null && kind == null && city == null) || (sex.equals("total") && kind.equals("total") && city.equals("total"))) {
+                return totLosslist; // 초기 화면(검색 없음)
             } else {
-                return citylist;
+                return sexlist;
             }
         } catch (Exception e) {
 
@@ -61,13 +59,14 @@ public class LossService {
 
             // get <staff>
             NodeList list = doc.getElementsByTagName("row");
-            for (int temp = 0; temp < list.getLength(); temp++) {
 
+            for (int temp = 0; temp < list.getLength(); temp++) {
                 Node node = list.item(temp);
                 HashMap<String, String> map = new HashMap<String, String>();
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element element = (Element) node;
+
                     // get text
                     String SIGUN_CD = element.getElementsByTagName("SIGUN_CD").item(0).getTextContent();
                     String SIGUN_NM = element.getElementsByTagName("SIGUN_NM").item(0).getTextContent();
@@ -80,9 +79,9 @@ public class LossService {
                     SPECIES_NM = SPECIES_NM.replace("[", "");
                     String result = SPECIES_NM.split("] ")[0];
                     String details = null;
-                    try{
+                    try {
                         details = SPECIES_NM.split("]")[1];
-                    } catch (ArrayIndexOutOfBoundsException e){
+                    } catch (ArrayIndexOutOfBoundsException e) {
                         details = "";
                     }
                     String COLOR_NM = element.getElementsByTagName("COLOR_NM").item(0).getTextContent();
@@ -107,7 +106,7 @@ public class LossService {
 
                     String REFINE_ROADNM_ADDR = element.getElementsByTagName("REFINE_ROADNM_ADDR").item(0).getTextContent();
                     String city = REFINE_ROADNM_ADDR.split(" ")[1];
-
+                    System.out.println(city);
                     String REFINE_ZIP_CD = element.getElementsByTagName("REFINE_ZIP_CD").item(0).getTextContent();
                     String REFINE_WGS84_LOGT = element.getElementsByTagName("REFINE_WGS84_LOGT").item(0).getTextContent();
                     String REFINE_WGS84_LAT = element.getElementsByTagName("REFINE_WGS84_LAT").item(0).getTextContent();
@@ -158,10 +157,8 @@ public class LossService {
         }
     }
 
-
-
     // 페이징 처리
-    public ArrayList<LossDTO> parsenum(ArrayList<LossDTO> parses, int page){
+    public ArrayList<LossDTO> parsenum(ArrayList<LossDTO> parses, int page) {
         ArrayList<LossDTO> parsepage = new ArrayList<>();
         Pagination pagination = new Pagination();
         /*시작 페이지 값을 가져온다*/
@@ -174,14 +171,14 @@ public class LossService {
         int maxPage = page * pagesize;
 
         // 시작페이지
-        int minPage = (maxPage-pagesize)+1;  // maxPage - maxpage-pagesize   1000 -
+        int minPage = (maxPage - pagesize) + 1;  // maxPage - maxpage-pagesize   1000 -
 
         // 전체 리스트의 사이즈의 갯수보다 maxPage가 크다면 maxPage를 parses.size()값을 줘서 값을 맞추는것임
-        if(maxPage > parses.size()){
+        if (maxPage > parses.size()) {
             maxPage = parses.size();
             /*minPage = */
         }
-        for(int i = minPage-1; i<maxPage; i++){
+        for (int i = minPage - 1; i < maxPage; i++) {
             parsepage.add(parses.get(i));
         }
         return parsepage;
@@ -189,43 +186,11 @@ public class LossService {
 
     // 상세페이지
     public ArrayList<LossDTO> getlossboard(String ABDM_IDNTFY_NO) {
-        ArrayList<LossDTO> lossDTOS = totlosslist();
+        ArrayList<LossDTO> totLosslist = totlosslist();
         ArrayList<LossDTO> getlossDTOS = new ArrayList<>();
-        for (int i = 0; i < lossDTOS.size(); i++) {
-            if (lossDTOS.get(i).getABDM_IDNTFY_NO().equals(ABDM_IDNTFY_NO)) {
-                LossDTO lossDTO = LossDTO.builder()
-                        .SIGUN_CD(lossDTOS.get(i).getSIGUN_CD())
-                        .SIGUN_NM(lossDTOS.get(i).getSIGUN_NM())
-                        .ABDM_IDNTFY_NO(lossDTOS.get(i).getABDM_IDNTFY_NO())
-                        .THUMB_IMAGE_COURS(lossDTOS.get(i).getTHUMB_IMAGE_COURS())
-                        .RECEPT_DE(lossDTOS.get(i).getRECEPT_DE())
-                        .DISCVRY_PLC_INFO(lossDTOS.get(i).getDISCVRY_PLC_INFO())
-                        .SPECIES_NM(lossDTOS.get(i).getSPECIES_NM())
-                        .COLOR_NM(lossDTOS.get(i).getCOLOR_NM())
-                        .AGE_INFO(lossDTOS.get(i).getAGE_INFO())
-                        .BDWGH_INFO(lossDTOS.get(i).getBDWGH_INFO())
-                        .PBLANC_IDNTFY_NO(lossDTOS.get(i).getPBLANC_IDNTFY_NO())
-                        .PBLANC_BEGIN_DE(lossDTOS.get(i).getPBLANC_BEGIN_DE())
-                        .PBLANC_END_DE(lossDTOS.get(i).getPBLANC_END_DE())
-                        .IMAGE_COURS(lossDTOS.get(i).getIMAGE_COURS())
-                        .STATE_NM(lossDTOS.get(i).getSTATE_NM())
-                        .SEX_NM(lossDTOS.get(i).getSEX_NM())
-                        .NEUT_YN(lossDTOS.get(i).getNEUT_YN())
-                        .SFETR_INFO(lossDTOS.get(i).getSFETR_INFO())
-                        .SHTER_NM(lossDTOS.get(i).getSHTER_NM())
-                        .SHTER_TELNO(lossDTOS.get(i).getSHTER_TELNO())
-                        .PROTECT_PLC(lossDTOS.get(i).getPROTECT_PLC())
-                        .JURISD_INST_NM(lossDTOS.get(i).getJURISD_INST_NM())
-                        .CHRGPSN_NM(lossDTOS.get(i).getCHRGPSN_NM())
-                        .CHRGPSN_CONTCT_NO(lossDTOS.get(i).getCHRGPSN_CONTCT_NO())
-                        .PARTCLR_MATR(lossDTOS.get(i).getPARTCLR_MATR())
-                        .REFINE_LOTNO_ADDR(lossDTOS.get(i).getREFINE_LOTNO_ADDR())
-                        .REFINE_ROADNM_ADDR(lossDTOS.get(i).getREFINE_ROADNM_ADDR())
-                        .REFINE_ZIP_CD(lossDTOS.get(i).getREFINE_ZIP_CD())
-                        .REFINE_WGS84_LOGT(lossDTOS.get(i).getREFINE_WGS84_LOGT())
-                        .REFINE_WGS84_LAT(lossDTOS.get(i).getREFINE_WGS84_LAT())
-                        .build();
-                getlossDTOS.add(lossDTO);
+        for (int i = 0; i < totLosslist.size(); i++) {
+            if (totLosslist.get(i).getABDM_IDNTFY_NO().equals(ABDM_IDNTFY_NO)) {
+                getlossDTOS.add(totLosslist.get(i));
             }
         }
         return getlossDTOS;
