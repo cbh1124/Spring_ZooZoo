@@ -19,7 +19,26 @@ import java.util.HashMap;
 @Service
 public class LossService {
 
-    // 전체 리스트
+    // 필터링(조회) 리스트
+    public ArrayList<LossDTO> losslist(String keyword) {
+        LossOption lossOption = new LossOption();
+        ArrayList<LossDTO> totLosslist = totlosslist();
+        ArrayList<LossDTO> sexlist = lossOption.sexlist(keyword);
+        ArrayList<LossDTO> kindlist = lossOption.kindlist(keyword);
+        ArrayList<LossDTO> citylist = lossOption.citylist(keyword);
+        try {
+            if (keyword == null || keyword.equals("total")) {
+                return totLosslist;
+            } else {
+                return citylist;
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+
+    // 전체 리스트 (API 데이터 호출)
     public ArrayList<LossDTO> totlosslist() {
 
         ArrayList<LossDTO> lossDTOS = new ArrayList<>();
@@ -60,7 +79,12 @@ public class LossService {
                     String SPECIES_NM = element.getElementsByTagName("SPECIES_NM").item(0).getTextContent();
                     SPECIES_NM = SPECIES_NM.replace("[", "");
                     String result = SPECIES_NM.split("] ")[0];
-
+                    String details = null;
+                    try{
+                        details = SPECIES_NM.split("]")[1];
+                    } catch (ArrayIndexOutOfBoundsException e){
+                        details = "";
+                    }
                     String COLOR_NM = element.getElementsByTagName("COLOR_NM").item(0).getTextContent();
                     String AGE_INFO = element.getElementsByTagName("AGE_INFO").item(0).getTextContent();
                     String BDWGH_INFO = element.getElementsByTagName("BDWGH_INFO").item(0).getTextContent();
@@ -80,7 +104,10 @@ public class LossService {
                     String CHRGPSN_CONTCT_NO = element.getElementsByTagName("CHRGPSN_CONTCT_NO").item(0).getTextContent();
                     String PARTCLR_MATR = element.getElementsByTagName("PARTCLR_MATR").item(0).getTextContent();
                     String REFINE_LOTNO_ADDR = element.getElementsByTagName("REFINE_LOTNO_ADDR").item(0).getTextContent();
+
                     String REFINE_ROADNM_ADDR = element.getElementsByTagName("REFINE_ROADNM_ADDR").item(0).getTextContent();
+                    String city = REFINE_ROADNM_ADDR.split(" ")[1];
+
                     String REFINE_ZIP_CD = element.getElementsByTagName("REFINE_ZIP_CD").item(0).getTextContent();
                     String REFINE_WGS84_LOGT = element.getElementsByTagName("REFINE_WGS84_LOGT").item(0).getTextContent();
                     String REFINE_WGS84_LAT = element.getElementsByTagName("REFINE_WGS84_LAT").item(0).getTextContent();
@@ -94,6 +121,7 @@ public class LossService {
                             .RECEPT_DE(RECEPT_DE)
                             .DISCVRY_PLC_INFO(DISCVRY_PLC_INFO)
                             .SPECIES_NM(result)
+                            .details(details)
                             .COLOR_NM(COLOR_NM)
                             .AGE_INFO(AGE_INFO)
                             .BDWGH_INFO(BDWGH_INFO)
@@ -114,6 +142,7 @@ public class LossService {
                             .PARTCLR_MATR(PARTCLR_MATR)
                             .REFINE_LOTNO_ADDR(REFINE_LOTNO_ADDR)
                             .REFINE_ROADNM_ADDR(REFINE_ROADNM_ADDR)
+                            .city(city)
                             .REFINE_ZIP_CD(REFINE_ZIP_CD)
                             .REFINE_WGS84_LOGT(REFINE_WGS84_LOGT)
                             .REFINE_WGS84_LAT(REFINE_WGS84_LAT)
@@ -129,25 +158,10 @@ public class LossService {
         }
     }
 
-    // 필터링(조회)
-    public ArrayList<LossDTO> losslist(String keyword) {
-        LossOption lossOption = new LossOption();
-        ArrayList<LossDTO> totLosslist = totlosslist();
-        ArrayList<LossDTO> lossDTOS = lossOption.sexlist(keyword);
-        try {
-            if (keyword.equals("total")) {
-                return totLosslist;
-            } else {
-                return lossDTOS;
-            }
-        } catch (Exception e) {
 
-        }
-        return null;
-    }
 
-    // 페이징 처리 값 가져와서
-    public ArrayList<LossDTO> parsenum(ArrayList<LossDTO> parses, int page) {
+    // 페이징 처리
+    public ArrayList<LossDTO> parsenum(ArrayList<LossDTO> parses, int page){
         ArrayList<LossDTO> parsepage = new ArrayList<>();
         Pagination pagination = new Pagination();
         /*시작 페이지 값을 가져온다*/
@@ -155,18 +169,21 @@ public class LossService {
         /*화면에 뿌릴 페이지 사이즈 가져오기 */
         pagination.setPageSize(12);
         int pagesize = pagination.getPageSize();
+
         // 끝 페이지
         int maxPage = page * pagesize;
-        if (maxPage > parses.size()) {
-            maxPage = parses.size();
-        }
-        // 시작페이지
-        int minPage = (maxPage - pagesize) + 1;  // maxPage - maxpage-pagesize   1000 -
 
-        for (int i = minPage - 1; i < maxPage; i++) {
+        // 시작페이지
+        int minPage = (maxPage-pagesize)+1;  // maxPage - maxpage-pagesize   1000 -
+
+        // 전체 리스트의 사이즈의 갯수보다 maxPage가 크다면 maxPage를 parses.size()값을 줘서 값을 맞추는것임
+        if(maxPage > parses.size()){
+            maxPage = parses.size();
+            /*minPage = */
+        }
+        for(int i = minPage-1; i<maxPage; i++){
             parsepage.add(parses.get(i));
         }
-
         return parsepage;
     }
 
