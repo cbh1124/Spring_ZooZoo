@@ -49,7 +49,7 @@ public class Pagination {
     // 총 게시물 수 - totalListCnt
     // 현재 페이지 - page
     public Pagination(int totalListCnt, int page) {
-
+        setPageSize(12);
         /** 3. 현재 페이지 **/
         setPage(page);
         /** 5. 총 게시글 수 **/
@@ -70,6 +70,7 @@ public class Pagination {
         setStartPage((block - 1) * blockSize + 1);
         /** 9. 블럭 마지막 페이지 **/
         setEndPage(startPage + blockSize - 1);
+
         /* === 블럭 마지막 페이지에 대한 validation ===*/
         if(endPage > totalPageCnt){
             this.endPage = totalPageCnt;

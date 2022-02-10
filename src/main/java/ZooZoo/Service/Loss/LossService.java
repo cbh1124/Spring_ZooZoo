@@ -21,17 +21,40 @@ public class LossService {
 
     // 필터링(조회) 리스트
     public ArrayList<LossDTO> losslist(String sex, String kind, String city) {
-        LossOption lossOption = new LossOption();
         ArrayList<LossDTO> totLosslist = totlosslist();
-        ArrayList<LossDTO> sexlist = lossOption.sexlist(sex, kind, city);
+        ArrayList<LossDTO> getlist = new ArrayList<>();
+
         try {
             if ((sex == null && kind == null && city == null) || (sex.equals("total") && kind.equals("total") && city.equals("total"))) {
-                return totLosslist; // 초기 화면(검색 없음)
-            } else {
-                return sexlist;
+                return totLosslist; // 초기화면 (검색 없음)
             }
-        } catch (Exception e) {
+            for (int i = 0; i < totLosslist.size(); i++) {
+                // 전체 조건 검색
+                if (sex != null && kind != null && city != null && totLosslist.get(i).getSEX_NM().equals(sex) && totLosslist.get(i).getSPECIES_NM().equals(kind) && totLosslist.get(i).getCity().equals(city)) {
+                    getlist.add(totLosslist.get(i));
+                    // 성별만 total
+                } else if ((sex == null || sex.equals("total")) && kind != null && totLosslist.get(i).getSPECIES_NM().equals(kind) && city != null && totLosslist.get(i).getCity().equals(city)) {
+                    getlist.add(totLosslist.get(i));
+                    // 종류만 total
+                } else if ((kind == null || kind.equals("total")) && sex != null && totLosslist.get(i).getSEX_NM().equals(sex) && city != null && totLosslist.get(i).getCity().equals(city)) {
+                    getlist.add(totLosslist.get(i));
+                    // 시군구만 total
+                } else if ((city == null || city.equals("total")) && sex != null && totLosslist.get(i).getSEX_NM().equals(sex) && kind != null && totLosslist.get(i).getSPECIES_NM().equals(kind)) {
+                    getlist.add(totLosslist.get(i));
+                    // 종류, 시군구 total / 성별만 검색
+                } else if (((kind == null && city == null) || (kind.equals("total") && city.equals("total"))) && sex != null && totLosslist.get(i).getSEX_NM().equals(sex)) {
+                    getlist.add(totLosslist.get(i));
+                    // 성별, 시군구 total / 종류만 검색
+                } else if (((sex == null && city == null) || (sex.equals("total") && city.equals("total"))) && kind != null && totLosslist.get(i).getSPECIES_NM().equals(kind)) {
+                    getlist.add(totLosslist.get(i));
+                    // 성별, 종류 total / 시군구만 검색
+                } else if (((sex == null && kind == null) || (sex.equals("total") && kind.equals("total"))) && city != null && totLosslist.get(i).getCity().equals(city)) {
+                    getlist.add(totLosslist.get(i));
+                }
+            }
+            return getlist;
 
+        } catch (Exception e) {
         }
         return null;
     }
@@ -106,7 +129,6 @@ public class LossService {
 
                     String REFINE_ROADNM_ADDR = element.getElementsByTagName("REFINE_ROADNM_ADDR").item(0).getTextContent();
                     String city = REFINE_ROADNM_ADDR.split(" ")[1];
-                    System.out.println(city);
                     String REFINE_ZIP_CD = element.getElementsByTagName("REFINE_ZIP_CD").item(0).getTextContent();
                     String REFINE_WGS84_LOGT = element.getElementsByTagName("REFINE_WGS84_LOGT").item(0).getTextContent();
                     String REFINE_WGS84_LAT = element.getElementsByTagName("REFINE_WGS84_LAT").item(0).getTextContent();

@@ -100,7 +100,6 @@ public class BoardController {
         String sex = request.getParameter("sex"); // 성별
         String kind = request.getParameter("kind"); // 축종
         String city = request.getParameter("city"); // 시군구
-        System.out.println(city);
         HttpSession session = request.getSession();
 
         if (sex != null || kind != null || city != null) {
@@ -113,7 +112,7 @@ public class BoardController {
             city = (String) session.getAttribute("city");
         }
 
-        // 키워드 2개 넘기기
+
         ArrayList<LossDTO> parses = lossService.losslist(sex, kind, city); // 필터링 게시물
         ArrayList<LossDTO> parsesPage = lossService.parsenum(parses, page); // 페이징
 
