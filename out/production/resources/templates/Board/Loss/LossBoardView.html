@@ -57,9 +57,7 @@
                                 <img th:src="${lossDTO.IMAGE_COURS}" alt="" style="height:800px;">
                             </div>
                             <div class="down-content">
-                                <a href="meeting-details.html">
-                                    <h4 th:text="${lossDTO.details}">품종</h4>
-                                </a>
+                                <h4 th:text="${lossDTO.details}">품종</h4>
                                 <p>상태 : <span th:text="${lossDTO.STATE_NM}"></span></p>
                                 <table class="table" style="margin-bottom : 16px;">
                                     <tr>
@@ -141,21 +139,42 @@
                                             </p>
                                         </div>
                                     </div>
+                                    <hr>
                                     <div class="col-lg-12">
-                                        <div class="share">
-                                            <h5>Share:</h5>
-                                            <ul>
-                                                <li><a href="#">Facebook</a>,</li>
-                                                <li><a href="#">Twitter</a>,</li>
-                                                <li><a href="#">Linkedin</a>,</li>
-                                                <li><a href="#">Behance</a></li>
-                                            </ul>
+                                        <div class="">
+                                            <h5>** 유기동물 문의는 보호센터에 연락하시기 바랍니다.</h5>
                                         </div>
                                     </div>
+                                    <h5>댓글</h5>
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <input class="form-control">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <button class="form-control">댓글등록</button>
+                                        </div>
+                                    </div>
+                                    <table class="table">
+                                        <tr>
+                                            <th width="20%">작성자</th>
+                                            <th width="65%">내용</th>
+                                            <th width="15%">비고</th>
+                                        </tr>
+                                        <tr>
+                                            <td>작성자1</td>
+                                            <td>댓글</td>
+                                            <td>
+                                                <button type="button" class="btn btn-outline-secondary">수정</button>
+                                                <button type="button" class="btn btn-outline-secondary">삭제</button>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-lg-12">
                         <div class="main-button-red">
                             <a th:href="@{/LossBoardlist}">뒤로가기</a>
@@ -227,6 +246,9 @@
         $(window).scroll(function () {
           checkSection();
         });
+
+
+
 
 
 
