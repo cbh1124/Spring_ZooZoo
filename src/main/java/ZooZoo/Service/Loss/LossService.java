@@ -22,34 +22,44 @@ public class LossService {
     // 필터링(조회) 리스트
     public ArrayList<LossDTO> losslist(String sex, String kind, String city) {
         ArrayList<LossDTO> totLosslist = totlosslist();
+        ArrayList<LossDTO> actLosslist = new ArrayList<>();
         ArrayList<LossDTO> getlist = new ArrayList<>();
+
+        for(int i = 0; i < totLosslist.size(); i++){
+            if (totLosslist.get(i).getSTATE_NM().contains("보호중")) {
+                actLosslist.add(totLosslist.get(i));
+            }
+        }
+
+
+
 
         try {
             if ((sex == null && kind == null && city == null) || (sex.equals("total") && kind.equals("total") && city.equals("total"))) {
-                return totLosslist; // 초기화면 (검색 없음)
+                return actLosslist; // 초기화면 (검색 없음)
             }
-            for (int i = 0; i < totLosslist.size(); i++) {
+            for (int i = 0; i < actLosslist.size(); i++) {
                 // 전체 조건 검색
-                if (sex != null && kind != null && city != null && totLosslist.get(i).getSEX_NM().equals(sex) && totLosslist.get(i).getSPECIES_NM().equals(kind) && totLosslist.get(i).getCity().equals(city)) {
-                    getlist.add(totLosslist.get(i));
+                if (sex != null && kind != null && city != null && actLosslist.get(i).getSEX_NM().equals(sex) && actLosslist.get(i).getSPECIES_NM().equals(kind) && actLosslist.get(i).getCity().equals(city)) {
+                    getlist.add(actLosslist.get(i));
                     // 성별만 total
-                } else if ((sex == null || sex.equals("total")) && kind != null && totLosslist.get(i).getSPECIES_NM().equals(kind) && city != null && totLosslist.get(i).getCity().equals(city)) {
-                    getlist.add(totLosslist.get(i));
+                } else if ((sex == null || sex.equals("total")) && kind != null && actLosslist.get(i).getSPECIES_NM().equals(kind) && city != null && actLosslist.get(i).getCity().equals(city)) {
+                    getlist.add(actLosslist.get(i));
                     // 종류만 total
-                } else if ((kind == null || kind.equals("total")) && sex != null && totLosslist.get(i).getSEX_NM().equals(sex) && city != null && totLosslist.get(i).getCity().equals(city)) {
-                    getlist.add(totLosslist.get(i));
+                } else if ((kind == null || kind.equals("total")) && sex != null && actLosslist.get(i).getSEX_NM().equals(sex) && city != null && actLosslist.get(i).getCity().equals(city)) {
+                    getlist.add(actLosslist.get(i));
                     // 시군구만 total
-                } else if ((city == null || city.equals("total")) && sex != null && totLosslist.get(i).getSEX_NM().equals(sex) && kind != null && totLosslist.get(i).getSPECIES_NM().equals(kind)) {
-                    getlist.add(totLosslist.get(i));
+                } else if ((city == null || city.equals("total")) && sex != null && actLosslist.get(i).getSEX_NM().equals(sex) && kind != null && actLosslist.get(i).getSPECIES_NM().equals(kind)) {
+                    getlist.add(actLosslist.get(i));
                     // 종류, 시군구 total / 성별만 검색
-                } else if (((kind == null && city == null) || (kind.equals("total") && city.equals("total"))) && sex != null && totLosslist.get(i).getSEX_NM().equals(sex)) {
-                    getlist.add(totLosslist.get(i));
+                } else if (((kind == null && city == null) || (kind.equals("total") && city.equals("total"))) && sex != null && actLosslist.get(i).getSEX_NM().equals(sex)) {
+                    getlist.add(actLosslist.get(i));
                     // 성별, 시군구 total / 종류만 검색
-                } else if (((sex == null && city == null) || (sex.equals("total") && city.equals("total"))) && kind != null && totLosslist.get(i).getSPECIES_NM().equals(kind)) {
-                    getlist.add(totLosslist.get(i));
+                } else if (((sex == null && city == null) || (sex.equals("total") && city.equals("total"))) && kind != null && actLosslist.get(i).getSPECIES_NM().equals(kind)) {
+                    getlist.add(actLosslist.get(i));
                     // 성별, 종류 total / 시군구만 검색
-                } else if (((sex == null && kind == null) || (sex.equals("total") && kind.equals("total"))) && city != null && totLosslist.get(i).getCity().equals(city)) {
-                    getlist.add(totLosslist.get(i));
+                } else if (((sex == null && kind == null) || (sex.equals("total") && kind.equals("total"))) && city != null && actLosslist.get(i).getCity().equals(city)) {
+                    getlist.add(actLosslist.get(i));
                 }
             }
             return getlist;
@@ -85,10 +95,10 @@ public class LossService {
 
             for (int temp = 0; temp < list.getLength(); temp++) {
                 Node node = list.item(temp);
-                HashMap<String, String> map = new HashMap<String, String>();
-                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Element element = (Element) node;
 
-                    Element element = (Element) node;
+
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
 
                     // get text
                     String SIGUN_CD = element.getElementsByTagName("SIGUN_CD").item(0).getTextContent();
@@ -97,7 +107,7 @@ public class LossService {
                     String THUMB_IMAGE_COURS = element.getElementsByTagName("THUMB_IMAGE_COURS").item(0).getTextContent();
                     String RECEPT_DE = element.getElementsByTagName("RECEPT_DE").item(0).getTextContent();
                     String DISCVRY_PLC_INFO = element.getElementsByTagName("DISCVRY_PLC_INFO").item(0).getTextContent();
-
+                    String STATE_NM = element.getElementsByTagName("STATE_NM").item(0).getTextContent();
                     String SPECIES_NM = element.getElementsByTagName("SPECIES_NM").item(0).getTextContent();
                     SPECIES_NM = SPECIES_NM.replace("[", "");
                     String result = SPECIES_NM.split("] ")[0];
@@ -114,8 +124,15 @@ public class LossService {
                     String PBLANC_BEGIN_DE = element.getElementsByTagName("PBLANC_BEGIN_DE").item(0).getTextContent();
                     String PBLANC_END_DE = element.getElementsByTagName("PBLANC_END_DE").item(0).getTextContent();
                     String IMAGE_COURS = element.getElementsByTagName("IMAGE_COURS").item(0).getTextContent();
-                    String STATE_NM = element.getElementsByTagName("STATE_NM").item(0).getTextContent();
                     String SEX_NM = element.getElementsByTagName("SEX_NM").item(0).getTextContent();
+                    String sex = null;
+                    if (SEX_NM.equals("F")) {
+                        sex = "암컷";
+                    } else if (SEX_NM.equals("M")) {
+                        sex = "수컷";
+                    } else if (SEX_NM.equals("Q")) {
+                        sex = "미상";
+                    }
                     String NEUT_YN = element.getElementsByTagName("NEUT_YN").item(0).getTextContent();
                     String SFETR_INFO = element.getElementsByTagName("SFETR_INFO").item(0).getTextContent();
                     String SHTER_NM = element.getElementsByTagName("SHTER_NM").item(0).getTextContent();
@@ -126,7 +143,6 @@ public class LossService {
                     String CHRGPSN_CONTCT_NO = element.getElementsByTagName("CHRGPSN_CONTCT_NO").item(0).getTextContent();
                     String PARTCLR_MATR = element.getElementsByTagName("PARTCLR_MATR").item(0).getTextContent();
                     String REFINE_LOTNO_ADDR = element.getElementsByTagName("REFINE_LOTNO_ADDR").item(0).getTextContent();
-
                     String REFINE_ROADNM_ADDR = element.getElementsByTagName("REFINE_ROADNM_ADDR").item(0).getTextContent();
                     String city = REFINE_ROADNM_ADDR.split(" ")[1];
                     String REFINE_ZIP_CD = element.getElementsByTagName("REFINE_ZIP_CD").item(0).getTextContent();
@@ -151,7 +167,7 @@ public class LossService {
                             .PBLANC_END_DE(PBLANC_END_DE)
                             .IMAGE_COURS(IMAGE_COURS)
                             .STATE_NM(STATE_NM)
-                            .SEX_NM(SEX_NM)
+                            .SEX_NM(sex)
                             .NEUT_YN(NEUT_YN)
                             .SFETR_INFO(SFETR_INFO)
                             .SHTER_NM(SHTER_NM)
@@ -194,7 +210,7 @@ public class LossService {
 
         // 시작페이지
         int minPage = (maxPage - pagesize) + 1;  // maxPage - maxpage-pagesize   1000 -
-
+        System.out.println(parses.size());
         // 전체 리스트의 사이즈의 갯수보다 maxPage가 크다면 maxPage를 parses.size()값을 줘서 값을 맞추는것임
         if (maxPage > parses.size()) {
             maxPage = parses.size();
