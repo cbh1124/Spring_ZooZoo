@@ -129,7 +129,7 @@
                         </a>
                     </div>
                     <div class="down-content">
-                        <a href="meeting-details.html">
+                        <a th:href="@{ '/Board/Loss/LossBoardView/' + ${lossDTO.ABDM_IDNTFY_NO} } ">
                             <h4 th:text="${lossDTO.details}">품종세부</h4><br>
                         </a>
                         <table class="table">
