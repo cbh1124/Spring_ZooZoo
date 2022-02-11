@@ -1,7 +1,9 @@
 package ZooZoo.Domain.DTO.Board;
 
+import ZooZoo.Domain.Entity.Board.ReplyEntity;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 @Getter
@@ -47,10 +49,4 @@ public class LossDTO {
     private String THUMB_IMAGE_COURS; //썸네일이미지경로
     private String REFINE_WGS84_LAT; //WGS84위도
     private String REFINE_WGS84_LOGT; //WGS84경도
-
-
-
-
-
-
 }
