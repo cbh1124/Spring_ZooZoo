@@ -57,3 +57,32 @@ function categoryChange(e) {
         target.appendChild(opt);
     }
 }
+
+// 댓글
+function replywrite(apikey){
+
+    var rcontents = $("#rcontents").val();
+    var cano = $("#cano").val();
+
+    alert(rcontents);
+    // 댓글내용 공백 시 알람
+    if( rcontents == "" ){
+        alert("댓글 내용을 입력해주세요");
+        return;
+    }
+
+    $.ajax({
+        url: "/replywrite" ,
+        data : { "apikey" : apikey , "cano" : cano, "rcontents" : rcontents },
+        success: function(data) {
+            if( data == 1 ){
+                alert(rcontents);
+                $('#replytable').load( location.href+' #replytable' );
+                $("#rcontents").val("");
+            }else {
+                alert("로그인 후 사용가능합니다");
+                return;
+            }
+        }
+    });
+}

@@ -3,7 +3,9 @@ package ZooZoo.Controller.Board;
 import ZooZoo.Domain.DTO.Board.BoardDTO;
 import ZooZoo.Domain.DTO.Board.LossDTO;
 import ZooZoo.Domain.DTO.Board.ShareDTO;
+import ZooZoo.Domain.DTO.Member.MemberDTO;
 import ZooZoo.Domain.DTO.Pagination;
+import ZooZoo.Domain.Entity.Board.BoardEntity;
 import ZooZoo.Service.Free.FreeBoardService;
 import ZooZoo.Service.Loss.LossService;
 import ZooZoo.Service.Share.ShareService;
@@ -13,10 +15,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class BoardController {
@@ -131,7 +136,16 @@ public class BoardController {
     @GetMapping("/Board/Loss/LossBoardView/{ABDM_IDNTFY_NO}")
     public String goToLossBoardView(Model model, @PathVariable("ABDM_IDNTFY_NO") String ABDM_IDNTFY_NO) {
         ArrayList<LossDTO> lossDTOS = lossService.getlossboard(ABDM_IDNTFY_NO);
+
+        String apikey = lossDTOS.get(0).getABDM_IDNTFY_NO();
+        int cano = 1;
+
+        System.out.println(apikey + "," + cano);
+        // 해당 게시물 댓글 호출
+        List<BoardEntity> replyEntities = lossService.getreplylist(apikey, cano);
+
         model.addAttribute("lossDTOS", lossDTOS);
+        model.addAttribute("replyEntities", replyEntities);
         return "Board/Loss/LossBoardView";
     }
 
@@ -158,4 +172,23 @@ public class BoardController {
         model.addAttribute("shareDTO", dto);
         return "Board/Share/ShareBoardView";
     }
+
+    // 댓글 작성
+    @GetMapping("/replywrite")
+    @ResponseBody
+    public String replywrite(@RequestParam("apikey") String apikey,
+                             @RequestParam("cano") int cano,
+                             @RequestParam("rcontents") String rcontents) {
+
+        HttpSession session = request.getSession();
+        MemberDTO memberDto = (MemberDTO) session.getAttribute("loginDTO");
+        // 로그인 안되어 있을 경우
+        if (memberDto == null) {
+            return "2";
+        } else {
+            lossService.replywrite(apikey, cano, rcontents, memberDto.getMno());
+            return "1";
+        }
+    }
+
 }

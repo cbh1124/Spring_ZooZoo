@@ -18,13 +18,14 @@ public class BoardDTO {
     private String btitle;
     private String bcontents;
     private int bview;
+    private String apikey;
     private String bcreateddate;
-    private List <String> bfile;
+    private List<String> bfile;
     private String bwriter;
     //카테고리는??
     CategoryDTO categoryDTO = new CategoryDTO();
 
-    public BoardEntity toentity(){
+    public BoardEntity toentity() {
         return BoardEntity.builder()
                 .btitle(this.btitle)
                 .bcontents(this.bcontents)

@@ -15,23 +15,30 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="board")
-@ToString (exclude = {"memberEntity","categoryEntity" ,"boardImgEntities"})
+@Table(name = "board")
+@ToString(exclude = {"memberEntity", "categoryEntity", "boardImgEntities"})
 public class BoardEntity extends DateEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "bno")
     private int bno;
 
-    @Column (name="btitle")
+    @Column(name = "btitle")
     private String btitle;
-    @Column (name="bcontents", columnDefinition = "LONGTEXT")
+
+    @Column(name = "bcontents", columnDefinition = "LONGTEXT")
     private String bcontents;
-    @Column (name="bview")
+
+    @Column(name = "bview")
     private int bview;
+
+    @Column(name="apikey")
+    private String apikey; // api 식별키
 
     //회원 번호 fk
     @ManyToOne
-    @JoinColumn(name="mno")
+    @JoinColumn(name = "mno")
     private MemberEntity memberEntity;
 
     //카테고리 fk??????
@@ -40,6 +47,6 @@ public class BoardEntity extends DateEntity {
     private CategoryEntity categoryEntity;
 
     //게시판 이미지
-    @OneToMany(mappedBy="boardEntity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.ALL)
     private List<BoardImgEntity> boardImgEntities = new ArrayList<>();
 }

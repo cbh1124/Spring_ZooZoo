@@ -2,6 +2,12 @@ package ZooZoo.Service.Loss;
 
 import ZooZoo.Domain.DTO.Board.LossDTO;
 import ZooZoo.Domain.DTO.Pagination;
+import ZooZoo.Domain.Entity.Board.BoardEntity;
+import ZooZoo.Domain.Entity.Board.BoardRepository;
+import ZooZoo.Domain.Entity.Category.CategoryEntity;
+import ZooZoo.Domain.Entity.Category.CategoryRepository;
+import ZooZoo.Domain.Entity.Member.MemberEntity;
+import ZooZoo.Domain.Entity.Member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -10,11 +16,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LossService {
@@ -170,15 +178,7 @@ public class LossService {
     // 필터링(조회) 리스트
     public ArrayList<LossDTO> losslist(String sex, String kind, String city, String state) {
         ArrayList<LossDTO> totLosslist = totlosslist(); // 전체 리스트
-        ArrayList<LossDTO> actLosslist = new ArrayList<>(); // 보호중
-        ArrayList<LossDTO> endLosslist = new ArrayList<>(); // 종료
         ArrayList<LossDTO> getlist = new ArrayList<>();
-
-        for (int i = 0; i < totLosslist.size(); i++) {
-            if (totLosslist.get(i).getSTATE_NM().contains("종료")) {
-                endLosslist.add(totLosslist.get(i));
-            }
-        }
 
         try {
             if ((sex == null && kind == null && city == null && state == null) || (sex.equals("total") && kind.equals("total") && city.equals("total") && state.equals("total"))) {
@@ -280,5 +280,49 @@ public class LossService {
         return parsepage;
     }
 
+    @Autowired
+    BoardRepository boardRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
+    @Autowired
+    MemberRepository memberRepository;
+
+    @Transactional
+    public boolean replywrite(String apikey, int cano, String rcontents, int mno) {
+
+        // 해당 게시물 호출
+        ArrayList<LossDTO> lossDTOS = getlossboard(apikey);
+
+        // 카테고리
+        Optional<CategoryEntity> categoryEntity = categoryRepository.findById(cano);
+        Optional<MemberEntity> memberEntity = memberRepository.findById(mno);
+
+        // entity에 넣기
+        BoardEntity boardEntity = BoardEntity.builder()
+                .bcontents(rcontents)
+                .apikey(apikey)
+                .categoryEntity(categoryEntity.get())
+                .memberEntity(memberEntity.get())
+                .build();
+
+        // 댓글 save
+        boardRepository.save(boardEntity);
+        return true;
+    }
+
+    // 해당 게시물 모든 댓글 출력
+    public List<BoardEntity> getreplylist(String apikey, int cano) {
+
+        List<BoardEntity> replyEntities = new ArrayList<>();
+
+        try {
+            replyEntities = boardRepository.findAllReply(apikey, cano);
+
+        } catch (Exception e) {
+        }
+
+        return replyEntities;
+    }
 
 }
