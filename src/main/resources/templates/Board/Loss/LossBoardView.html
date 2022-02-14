@@ -161,33 +161,32 @@
                                     </div>
                                     <table class="table" id="replytable">
                                         <tr>
-                                            <th>bno</th>
-                                            <th width="15%" style="text-align: center;">작성자</th>
+                                            <th width="15%" style="text-align: center;">작성자(작성일)</th>
                                             <th width="70%">내용</th>
                                             <th width="13%"></th>
                                         </tr>
-                                        <tr th:each="replyEntities : ${replyEntities}">
-                                            <td id="bno" name="bno" th:text="${replyEntities.getBno()}"></td>
-                                            <td th:text="${replyEntities.getMemberEntity().getMid()}"
-                                                style="text-align: center;">작성자1
+                                        <tr th:each="replyEntities : ${replyEntities}" height="50px;">
+                                            <td style="text-align: center;">
+                                                <div th:text="${replyEntities.getMemberEntity().getMid()}"></div>
+                                                <div th:text="${#temporals.format( replyEntities.createdDate , 'yyyy-MM-dd HH:mm:ss')}" style="font-size:14px;"></div>
                                             </td>
-
-                                            <td id="tdbcontents" name="tdbcontents"
-                                                th:text="${replyEntities.bcontents}">댓글
-
+                                            <td th:id="tdbcontents+${replyEntities.getBno()}" name="tdbcontents"
+                                                th:text="${replyEntities.bcontents}" style="vertical-align:middle;">댓글
                                             </td>
                                             <td style="text-align: center;">
                                                 <div class="d-flex justify-content-center">
                                                     <div style="margin-right:8px;">
                                                         <button th:if="${session.loginDTO != null} and ${session.loginDTO.mid == replyEntities.getMemberEntity().getMid()}"
-                                                                id="btnrupdate" type="button"
+                                                                th:id="btnrupdate+${replyEntities.getBno()}"
+                                                                type="button"
                                                                 class="btn btn-outline-secondary"
                                                                 th:onclick="rupdate([[${replyEntities.getBno()}]])">수정
                                                         </button>
                                                     </div>
                                                     <div style="margin-right:10px;">
                                                         <button th:if="${session.loginDTO != null} and ${session.loginDTO.mid == replyEntities.getMemberEntity().getMid()}"
-                                                                id="btnrchange" type="button"
+                                                                th:id="btnrchange+${replyEntities.getBno()}"
+                                                                type="button"
                                                                 class="btn btn-outline-secondary" style="display:none;">
                                                             확인
                                                         </button>

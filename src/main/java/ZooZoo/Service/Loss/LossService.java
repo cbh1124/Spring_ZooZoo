@@ -9,6 +9,10 @@ import ZooZoo.Domain.Entity.Category.CategoryRepository;
 import ZooZoo.Domain.Entity.Member.MemberEntity;
 import ZooZoo.Domain.Entity.Member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -335,7 +339,7 @@ public class LossService {
 
     // 댓글 수정
     @Transactional
-    public boolean replyupdate(int bno, String newcontents){
+    public boolean replyupdate(int bno, String newcontents) {
         // 댓글 가져오기
         BoardEntity boardEntity = boardRepository.findById(bno).get();
         System.out.println("bno : " + bno);
