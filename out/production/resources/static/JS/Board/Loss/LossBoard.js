@@ -62,7 +62,6 @@ function categoryChange(e) {
 function replywrite(apikey){
     var rcontents = $("#rcontents").val();
     var cano = $("#cano").val();
-
     // 댓글내용 공백 시 알람
     if( rcontents == "" ){
         alert("댓글 내용을 입력해주세요");
@@ -92,7 +91,7 @@ function rdelete(bno) {
         data: {"bno" : bno},
         success: function(result){
             if (result == 1) {
-                alert("삭제완료");
+                $('#replytable').load( location.href+' #replytable' );
             } else {
                 alert("오류발생");
             }
@@ -101,7 +100,7 @@ function rdelete(bno) {
 }
 
 function rupdate(bno){
-    // inputbox로 변경
+
     document.getElementById("tdbcontents").innerHTML = "<input class='form-control' type='text' id='newcontents' name='newcontents'>";
     document.getElementById("btnrupdate").style = "display:none"; // 수정버튼 감추기
     document.getElementById("btnrchange").style = "display:block"; // 확인버튼 보이기

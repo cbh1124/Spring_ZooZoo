@@ -136,7 +136,9 @@ public class BoardController {
     @GetMapping("/Board/Loss/LossBoardView/{ABDM_IDNTFY_NO}")
     public String goToLossBoardView(Model model, @PathVariable("ABDM_IDNTFY_NO") String ABDM_IDNTFY_NO) {
         ArrayList<LossDTO> lossDTOS = lossService.getlossboard(ABDM_IDNTFY_NO);
-
+        // 세션 호출
+        HttpSession session = request.getSession();
+        MemberDTO memberDto = (MemberDTO) session.getAttribute("loginDTO");
         String apikey = lossDTOS.get(0).getABDM_IDNTFY_NO();
         int cano = 1;
 
@@ -144,6 +146,7 @@ public class BoardController {
         // 해당 게시물 댓글 호출
         List<BoardEntity> replyEntities = lossService.getreplylist(apikey, cano);
 
+        model.addAttribute("loginDTO",memberDto);
         model.addAttribute("lossDTOS", lossDTOS);
         model.addAttribute("replyEntities", replyEntities);
         return "Board/Loss/LossBoardView";
@@ -178,14 +181,10 @@ public class BoardController {
     @ResponseBody
     public String replywrite(@RequestParam("apikey") String apikey,
                              @RequestParam("cano") int cano,
-                             @RequestParam("rcontents") String rcontents) {
+                             @RequestParam("rcontents") String rcontents,Model model) {
         HttpSession session = request.getSession();
         MemberDTO memberDto = (MemberDTO) session.getAttribute("loginDTO");
 
-        System.out.println("apikey" + apikey);
-        System.out.println("cano" + cano);
-        System.out.println("rcontents" + rcontents);
-        System.out.println("memberDto.getMno()" + memberDto.getMno());
         // 로그인 안되어 있을 경우
         if (memberDto == null) {
             return "2";

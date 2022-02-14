@@ -338,7 +338,9 @@ public class LossService {
     public boolean replyupdate(int bno, String newcontents){
         // 댓글 가져오기
         BoardEntity boardEntity = boardRepository.findById(bno).get();
-
+        System.out.println("bno : " + bno);
+        System.out.println("내용 : " + newcontents);
+        System.out.println(boardRepository.findById(bno).get());
         // 내용 수정
         boardEntity.setBcontents(newcontents);
         return true;

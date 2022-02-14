@@ -146,13 +146,15 @@
                                     </div>
                                     <hr>
                                     <br>
+
                                     <div class="row">
                                         <div class="col-md-10">
-                                            <input class="form-control" type="text" id="rcontents" name="rcontents">
+                                            <input th:if="${session.loginDTO != null }" class="form-control" type="text"
+                                                   id="rcontents" name="rcontents">
                                             <input type="text" id="cano" name="cano" value="1" style="display:none">
                                         </div>
                                         <div class="col-md-2">
-                                            <button class="form-control"
+                                            <button th:if="${session.loginDTO != null }" class="form-control"
                                                     th:onclick="replywrite([[${lossDTO.ABDM_IDNTFY_NO}]])">댓글등록
                                             </button>
                                         </div>
@@ -165,24 +167,38 @@
                                             <th width="13%"></th>
                                         </tr>
                                         <tr th:each="replyEntities : ${replyEntities}">
-                                            <td id="bno" name="bno" th:text = "${replyEntities.getBno()}" value="1"></td>
+                                            <td id="bno" name="bno" th:text="${replyEntities.getBno()}"></td>
                                             <td th:text="${replyEntities.getMemberEntity().getMid()}"
                                                 style="text-align: center;">작성자1
                                             </td>
-                                            <td id="tdbcontents" th:text="${replyEntities.bcontents}">댓글</td>
+
+                                            <td id="tdbcontents" name="tdbcontents"
+                                                th:text="${replyEntities.bcontents}">댓글
+
+                                            </td>
                                             <td style="text-align: center;">
                                                 <div class="d-flex justify-content-center">
                                                     <div style="margin-right:8px;">
-                                                        <button id = "btnrupdate" type="button" class="btn btn-outline-secondary" th:onclick="rupdate([[${replyEntities.getBno()}]])">수정</button>
+                                                        <button th:if="${session.loginDTO != null} and ${session.loginDTO.mid == replyEntities.getMemberEntity().getMid()}"
+                                                                id="btnrupdate" type="button"
+                                                                class="btn btn-outline-secondary"
+                                                                th:onclick="rupdate([[${replyEntities.getBno()}]])">수정
+                                                        </button>
                                                     </div>
                                                     <div style="margin-right:10px;">
-                                                        <button id = "btnrchange" type="button" class="btn btn-outline-secondary" style="display:none;">확인</button>
+                                                        <button th:if="${session.loginDTO != null} and ${session.loginDTO.mid == replyEntities.getMemberEntity().getMid()}"
+                                                                id="btnrchange" type="button"
+                                                                class="btn btn-outline-secondary" style="display:none;">
+                                                            확인
+                                                        </button>
                                                     </div>
                                                     <div>
-                                                        <button type="button" class="btn btn-outline-secondary" th:onclick="rdelete([[${replyEntities.getBno()}]])">삭제</button>
+                                                        <button th:if="${session.loginDTO != null} and ${session.loginDTO.mid == replyEntities.getMemberEntity().getMid()}"
+                                                                type="button" class="btn btn-outline-secondary"
+                                                                th:onclick="rdelete([[${replyEntities.getBno()}]])">삭제
+                                                        </button>
                                                     </div>
                                                 </div>
-
                                             </td>
                                         </tr>
                                     </table>
