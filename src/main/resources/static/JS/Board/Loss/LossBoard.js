@@ -60,11 +60,9 @@ function categoryChange(e) {
 
 // 댓글
 function replywrite(apikey){
-
     var rcontents = $("#rcontents").val();
     var cano = $("#cano").val();
 
-    alert(rcontents);
     // 댓글내용 공백 시 알람
     if( rcontents == "" ){
         alert("댓글 내용을 입력해주세요");
