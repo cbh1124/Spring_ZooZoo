@@ -60,11 +60,9 @@ function categoryChange(e) {
 
 // 댓글
 function replywrite(apikey){
-
     var rcontents = $("#rcontents").val();
     var cano = $("#cano").val();
 
-    alert(rcontents);
     // 댓글내용 공백 시 알람
     if( rcontents == "" ){
         alert("댓글 내용을 입력해주세요");
@@ -76,12 +74,27 @@ function replywrite(apikey){
         data : { "apikey" : apikey , "cano" : cano, "rcontents" : rcontents },
         success: function(data) {
             if( data == 1 ){
-                alert(rcontents);
                 $('#replytable').load( location.href+' #replytable' );
                 $("#rcontents").val("");
             }else {
                 alert("로그인 후 사용가능합니다");
                 return;
+            }
+        }
+    });
+}
+
+function rdelete(bno) {
+    alert("삭제" + bno);
+
+    $.ajax({
+        url: "/replydelete",
+        data: {"bno" : bno},
+        success: function(result){
+            if (result == 1) {
+                alert("삭제완료");
+            } else {
+                alert("오류발생");
             }
         }
     });

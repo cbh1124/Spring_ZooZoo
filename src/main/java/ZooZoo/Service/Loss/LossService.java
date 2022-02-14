@@ -325,4 +325,11 @@ public class LossService {
         return replyEntities;
     }
 
+    // 특정 댓글 삭제
+    public boolean replydelete(int bno) {
+        boardRepository.delete(boardRepository.findById(bno).get());
+        System.out.println("bno : " + bno);
+        System.out.println(boardRepository.findById(bno).get());
+        return true;
+    }
 }

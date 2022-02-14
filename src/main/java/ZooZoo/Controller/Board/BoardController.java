@@ -179,9 +179,13 @@ public class BoardController {
     public String replywrite(@RequestParam("apikey") String apikey,
                              @RequestParam("cano") int cano,
                              @RequestParam("rcontents") String rcontents) {
-
         HttpSession session = request.getSession();
         MemberDTO memberDto = (MemberDTO) session.getAttribute("loginDTO");
+
+        System.out.println("apikey" + apikey);
+        System.out.println("cano" + cano);
+        System.out.println("rcontents" + rcontents);
+        System.out.println("memberDto.getMno()" + memberDto.getMno());
         // 로그인 안되어 있을 경우
         if (memberDto == null) {
             return "2";
@@ -191,4 +195,11 @@ public class BoardController {
         }
     }
 
+    @GetMapping("/replydelete")
+    @ResponseBody
+    public int replydelete(@RequestParam("bno") int bno) {
+
+        lossService.replydelete(bno);
+        return 1;
+    }
 }

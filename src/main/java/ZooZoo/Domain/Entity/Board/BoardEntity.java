@@ -42,7 +42,7 @@ public class BoardEntity extends DateEntity {
     private MemberEntity memberEntity;
 
     //카테고리 fk??????
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "cano")
     private CategoryEntity categoryEntity;
 
