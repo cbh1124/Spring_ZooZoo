@@ -162,17 +162,27 @@
                                             <th>bno</th>
                                             <th width="15%" style="text-align: center;">작성자</th>
                                             <th width="70%">내용</th>
-                                            <th width="15%" style="text-align: center;">비고</th>
+                                            <th width="13%"></th>
                                         </tr>
                                         <tr th:each="replyEntities : ${replyEntities}">
                                             <td id="bno" name="bno" th:text = "${replyEntities.getBno()}" value="1"></td>
                                             <td th:text="${replyEntities.getMemberEntity().getMid()}"
                                                 style="text-align: center;">작성자1
                                             </td>
-                                            <td th:text="${replyEntities.bcontents}">댓글</td>
+                                            <td id="tdbcontents" th:text="${replyEntities.bcontents}">댓글</td>
                                             <td style="text-align: center;">
-                                                <button type="button" class="btn btn-outline-secondary">수정</button>
-                                                <button type="button" class="btn btn-outline-secondary" th:onclick="rdelete([[${replyEntities.getBno()}]])">삭제</button>
+                                                <div class="d-flex justify-content-center">
+                                                    <div style="margin-right:8px;">
+                                                        <button id = "btnrupdate" type="button" class="btn btn-outline-secondary" th:onclick="rupdate([[${replyEntities.getBno()}]])">수정</button>
+                                                    </div>
+                                                    <div style="margin-right:10px;">
+                                                        <button id = "btnrchange" type="button" class="btn btn-outline-secondary" style="display:none;">확인</button>
+                                                    </div>
+                                                    <div>
+                                                        <button type="button" class="btn btn-outline-secondary" th:onclick="rdelete([[${replyEntities.getBno()}]])">삭제</button>
+                                                    </div>
+                                                </div>
+
                                             </td>
                                         </tr>
                                     </table>

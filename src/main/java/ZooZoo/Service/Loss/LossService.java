@@ -312,6 +312,7 @@ public class LossService {
     }
 
     // 해당 게시물 모든 댓글 출력
+    @Transactional
     public List<BoardEntity> getreplylist(String apikey, int cano) {
 
         List<BoardEntity> replyEntities = new ArrayList<>();
@@ -325,11 +326,21 @@ public class LossService {
         return replyEntities;
     }
 
-    // 특정 댓글 삭제
+    // 댓글 삭제
+    @Transactional
     public boolean replydelete(int bno) {
         boardRepository.delete(boardRepository.findById(bno).get());
-        System.out.println("bno : " + bno);
-        System.out.println(boardRepository.findById(bno).get());
+        return true;
+    }
+
+    // 댓글 수정
+    @Transactional
+    public boolean replyupdate(int bno, String newcontents){
+        // 댓글 가져오기
+        BoardEntity boardEntity = boardRepository.findById(bno).get();
+
+        // 내용 수정
+        boardEntity.setBcontents(newcontents);
         return true;
     }
 }

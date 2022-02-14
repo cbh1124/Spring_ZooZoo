@@ -194,12 +194,20 @@ public class BoardController {
             return "1";
         }
     }
-
+    // 댓글 삭제
     @GetMapping("/replydelete")
     @ResponseBody
     public int replydelete(@RequestParam("bno") int bno) {
 
         lossService.replydelete(bno);
         return 1;
+    }
+
+    // 댓글 수정
+    @GetMapping("/replyupdate")
+    @ResponseBody
+    public String replyupdate(@RequestParam("bno") int bno, @RequestParam("newcontents") String newcontents){
+        lossService.replyupdate(bno, newcontents);
+        return "1";
     }
 }

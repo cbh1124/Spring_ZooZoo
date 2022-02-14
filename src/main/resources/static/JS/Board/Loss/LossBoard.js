@@ -99,3 +99,30 @@ function rdelete(bno) {
         }
     });
 }
+
+function rupdate(bno){
+    // inputbox로 변경
+    document.getElementById("tdbcontents").innerHTML = "<input class='form-control' type='text' id='newcontents' name='newcontents'>";
+    document.getElementById("btnrupdate").style = "display:none"; // 수정버튼 감추기
+    document.getElementById("btnrchange").style = "display:block"; // 확인버튼 보이기
+
+    $(function(){
+        $("#btnrchange").click(function(){ // 확인 버튼 클릭
+            $.ajax({
+                url: "/replyupdate",
+                data: {"bno" : bno, "newcontents" : document.getElementById("newcontents").value},
+                success : function(result){
+                    if(result == 1){
+                        document.getElementById("tdbcontents").innerHTML = document.getElementById("newcontents").value;
+                        document.getElementById("btnrchange").style = "display:none"; // 확인버튼 감추기
+                        document.getElementById("btnrupdate").style = "display:block"; // 수정버튼 보이기
+                    } else {
+                        alert("오류발생");
+                    }
+                }
+            });
+        });
+    });
+
+
+}
