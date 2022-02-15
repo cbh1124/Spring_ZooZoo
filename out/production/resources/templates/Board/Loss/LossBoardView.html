@@ -31,7 +31,22 @@
 <body style="  background-color: #ff7f50;">
 
 <div th:replace="Header.html :: header"></div>
-
+<div class ="container">
+    <div class = "row">
+        <div class = "col-md-3">
+            <a th:href = "@{/LossBoardlist}"><h4 class = "text-center">유기</h4></a>
+        </div>
+        <div class = "col-md-3">
+            <a th:href = "@{/ShareBoardList}"><h4 class = "text-center">분양</h4></a>
+        </div>
+        <div class = "col-md-3">
+            <a th:href = "@{/hospitalboard}"><h4 class = "text-center">병원</h4></a>
+        </div>
+        <div class = "col-md-3">
+            <a th:href = "@{/freeboard}"><h4 class = "text-center">자유</h4></a>
+        </div>
+    </div>
+</div>
 <section class="heading-page header-text" id="top">
     <div class="container">
         <div class="row">

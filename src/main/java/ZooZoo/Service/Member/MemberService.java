@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemberService {
@@ -32,8 +35,8 @@ public class MemberService {
     // 아이디 중복확인
     public boolean Checkid(String mid) {
         List<MemberEntity> memberEntityList = memberRepository.findAll();
-        for(MemberEntity memberEntity : memberEntityList) {
-            if(memberEntity != null && memberEntity.getMid().equals(mid)) {
+        for (MemberEntity memberEntity : memberEntityList) {
+            if (memberEntity != null && memberEntity.getMid().equals(mid)) {
                 return true;
             }
         }
@@ -46,8 +49,8 @@ public class MemberService {
     // 로그인
     public boolean Login(String mid, String mpw) {
         List<MemberEntity> memberEntityList = memberRepository.findAll();
-        for(MemberEntity memberEntity : memberEntityList) {
-            if(memberEntity.getMid().equals(mid) && memberEntity.getMpw().equals(mpw)) {
+        for (MemberEntity memberEntity : memberEntityList) {
+            if (memberEntity.getMid().equals(mid) && memberEntity.getMpw().equals(mpw)) {
                 MemberDTO memberDTO = MemberDTO.builder().mid(memberEntity.getMid()).mpw(memberEntity.getMpw()).mno(memberEntity.getMno()).build();
                 HttpSession session = request.getSession();
                 session.setAttribute("loginDTO", memberDTO);
@@ -60,8 +63,8 @@ public class MemberService {
     // 회원 아이디 찾기
     public String FindId(String memail, String mname) {
         List<MemberEntity> memberEntities = memberRepository.findAll();
-        for(MemberEntity temp : memberEntities){
-            if(temp.getMemail() != null && temp.getMname() != null && temp.getMemail().equals(memail) && temp.getMname().equals(mname)){
+        for (MemberEntity temp : memberEntities) {
+            if (temp.getMemail() != null && temp.getMname() != null && temp.getMemail().equals(memail) && temp.getMname().equals(mname)) {
                 return temp.getMid();
             }
         }
@@ -78,4 +81,36 @@ public class MemberService {
         }
         return null;
     }
+
+    // 회원번호 -> 회원정보 반환
+    @Transactional
+    public MemberDTO getmemberDto(int mno) {
+        // 회원정보 저장 리스트
+        Optional<MemberEntity> entityOptional = memberRepository.findById(mno);
+
+        return MemberDTO.builder()
+                .mid(entityOptional.get().getMid())
+                .mpw(entityOptional.get().getMpw())
+                .memail(entityOptional.get().getMemail())
+                .mbirth(entityOptional.get().getMbirth())
+                .mname(entityOptional.get().getMname())
+                .maddress(entityOptional.get().getMaddress())
+                .createdDate(entityOptional.get().getCreatedDate())
+                .build();
+    }
+
+    // 회원탈퇴
+    public boolean mdelete(int mno, String passwordconfirm){
+        // 엔티티 가져오기
+        Optional<MemberEntity> entityOptional = memberRepository.findById(mno);
+
+        // 비밀번호 일치 여부 확인
+        if (entityOptional.get().getMpw().equals(passwordconfirm)){
+            memberRepository.delete(entityOptional.get());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

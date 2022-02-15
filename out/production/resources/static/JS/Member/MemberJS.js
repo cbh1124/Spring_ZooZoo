@@ -22,3 +22,27 @@ function findid(){
         }
     });
 }
+
+// 회원탈퇴
+function mdelete(){
+    var passwordconfirm = document.getElementById("passwordconfirm").value;
+
+    $.ajax({
+        url: "/Member/mdelete",
+        data:{"passwordconfirm" : passwordconfirm},
+        success: function(result){
+            if (result == 1){
+                location.href = "/Member/Logout"
+            } else {
+                $("#deletemsg").html("비밀번호가 일치하지 않습니다.");
+            }
+        }
+    });
+}
+
+// 회원수정
+
+function mupdate(mno){
+    document.getElementById("tdmname").style = "display:none"
+    document.getElementById("newmname").style = "display:block"
+}

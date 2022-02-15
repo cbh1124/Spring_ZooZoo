@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="background-color: #ff7f50;">
+
+<div th:replace="Header.html :: header"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <a th:href="@{/LossBoardlist}"><h4 class="text-center">유기</h4></a>
+        </div>
+        <div class="col-md-3">
+            <a th:href="@{/ShareBoardList}"><h4 class="text-center">분양</h4></a>
+        </div>
+        <div class="col-md-3">
+            <a th:href="@{/hospitalboard}"><h4 class="text-center">병원</h4></a>
+        </div>
+        <div class="col-md-3">
+            <a th:href="@{/freeboard}"><h4 class="text-center">자유</h4></a>
+        </div>
+    </div>
+    <table class="table">
+        <tr>
+            <td>아이디</td>
+            <td id = "tdmid" th:text="${memberDTO.getMid()}"></td>
+        </tr>
+        <tr>
+            <td>비밀번호</td>
+            <td id = "tdmpw" th:text="${memberDTO.getMpw()}"></td>
+        </tr>
+        <tr>
+            <td>이름</td>
+            <td>
+                <span id = "tdmname" th:text="${memberDTO.getMname()}"></span>
+                <input id="newmname" type="text" th:value="${memberDTO.getMname()}" style="display:none">
+            </td>
+        </tr>
+        <tr>
+            <td>이메일</td>
+            <td id = "tdmemail" th:text="${memberDTO.getMemail()}"></td>
+        </tr>
+        <tr>
+            <td>생년월일</td>
+            <td id = "tdmbirth" th:text="${memberDTO.getMbirth()}"></td>
+        </tr>
+        <tr>
+            <td>주소</td>
+            <td id = "tdmaddress" th:text="${memberDTO.getMaddress()}"></td>
+        </tr>
+        <tr>
+            <td>가입일자</td>
+            <td id = "tdmdate" th:text="${memberDTO.createdDate}"></td>
+        </tr>
+    </table>
+
+<!--    <button type="button" class="btn btn-outline-secondary" th:onclick="mdelete()">회원탈퇴</button>-->
+    <button type="button" th:onclick="mupdate([[${session.loginDTO.getMno()}]])">회원수정</button>
+    <button  data-bs-toggle="modal" data-bs-target="#modalmdelete"> 회원탈퇴 </button>
+
+    <div class="modal fade" tabindex="-1" id="modalmdelete" data-bs-keyboard="false" data-bs-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content rounded-4 shadow">
+                <div class="modal-body p-4 text-center">
+                    <h5 class="mb-0"> 회원탈퇴 </h5>
+                    <p class="mb-3" id="deletemsg"> <strong>정말 탈퇴하시겠습니까?</strong> </p>
+                    <input type="password" placeholder="비밀번호 확인" class="form-control" id="passwordconfirm">
+                </div>
+                <div class="modal-footer flex-nowrap p-0">
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0 border-right" onclick="mdelete()"><strong> 탈퇴 합니다.</strong></button>
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 m-0 rounded-0" data-bs-dismiss="modal"> 탈퇴 취소합니다. </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>
