@@ -181,12 +181,12 @@ public class MemberController {
         return "redirect:/"; //로그아웃 성공시 메인페이지로 이동
     }
 
-    // 회원수정
-    @GetMapping("/Member/Update")
-    @ResponseBody
-    public String memberupdate(@RequestParam("mno") int mno), @RequestParam("newmname") String newmname {
-//        memberService.memberupdate(mno, newmname);
-    }
+//    // 회원수정
+//    @GetMapping("/Member/Update")
+//    @ResponseBody
+//    public String memberupdate(@RequestParam("mno") int mno), @RequestParam("newmname") String newmname {
+////        memberService.memberupdate(mno, newmname);
+//    }
 
 
 }
