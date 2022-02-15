@@ -9,11 +9,17 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity @Table(name = "member")
-@Getter @Setter @ToString (exclude={"boardEntities","replyEntities"}) @Builder
-@NoArgsConstructor @AllArgsConstructor
+@Entity
+@Table(name = "member")
+@Getter
+@Setter
+@ToString(exclude = {"boardEntities", "replyEntities"})
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MemberEntity extends DateEntity {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int mno;
     @Column(name = "mid")
     private String mid;

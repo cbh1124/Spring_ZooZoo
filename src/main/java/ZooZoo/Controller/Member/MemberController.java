@@ -172,6 +172,38 @@ public class MemberController {
         }
     }
 
+    // 회원수정
+    @GetMapping("/Member/Update")
+    @ResponseBody
+    public int memberupdate(@RequestParam("newmname") String newmname,
+                            @RequestParam("newmemail") String newmemail,
+                            @RequestParam("newmbirth") String newmbirth,
+                            @RequestParam("newmaddress") String newmaddress
+    ) {
+        HttpSession session = request.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginDTO");
+        boolean result = memberService.mupdate(memberDTO.getMno(), newmname, newmemail, newmbirth, newmaddress);
+        if (result) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
+    // 회원 비밀번호수정
+    @GetMapping("/Member/Pwupdate")
+    @ResponseBody
+    public int memberupdate(@RequestParam("tdmpw") String tdmpw, @RequestParam("newmpw") String newmpw) {
+        HttpSession session = request.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("loginDTO");
+        boolean result = memberService.mpwupdate(memberDTO.getMno(), tdmpw, newmpw);
+        if (result) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
     //로그아웃
     @GetMapping("/Member/Logout")
     public String logout() {
@@ -180,13 +212,6 @@ public class MemberController {
         /*session.setAttribute("logindto",null); //기존 세션 값을 null로 변경하기*/
         return "redirect:/"; //로그아웃 성공시 메인페이지로 이동
     }
-
-//    // 회원수정
-//    @GetMapping("/Member/Update")
-//    @ResponseBody
-//    public String memberupdate(@RequestParam("mno") int mno), @RequestParam("newmname") String newmname {
-////        memberService.memberupdate(mno, newmname);
-//    }
 
 
 }

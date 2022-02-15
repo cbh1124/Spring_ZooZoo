@@ -113,4 +113,30 @@ public class MemberService {
         }
     }
 
+    // 회원수정
+    @Transactional
+    public boolean mupdate(int mno, String newmname, String newmemail, String newmbirth, String newmaddress){
+        MemberEntity memberEntity = memberRepository.findById(mno).get();
+        memberEntity.setMname(newmname);
+        memberEntity.setMemail(newmemail);
+        memberEntity.setMbirth(newmbirth);
+        memberEntity.setMaddress(newmaddress);
+        return true;
+    }
+
+    // 회원수정
+    @Transactional
+    public boolean mpwupdate(int mno, String tdmpw, String newmpw){
+        MemberEntity memberEntity = memberRepository.findById(mno).get();
+        if(memberEntity.getMpw().equals(tdmpw)){
+            memberEntity.setMpw(newmpw);
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+
 }
