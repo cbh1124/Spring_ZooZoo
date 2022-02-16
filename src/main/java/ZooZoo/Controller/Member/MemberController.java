@@ -71,9 +71,15 @@ public class MemberController {
         // 회원정보 가져오기
         MemberDTO memberDTO = memberService.getmemberDto(loginDTO.getMno());
         System.out.println("mno : " + loginDTO.getMno());
+        // 게시물 수 가져오기
+        int bcount = memberService.countboard(loginDTO.getMno());
+        // 댓글 수 가져오기
+        int rcount = memberService.countreply(loginDTO.getMno());
         // html로 전달
         model.addAttribute("loginDTO", loginDTO);
         model.addAttribute("memberDTO", memberDTO);
+        model.addAttribute("bcount", bcount);
+        model.addAttribute("rcount", rcount);
 
         return "Member/Myinfo";
     }

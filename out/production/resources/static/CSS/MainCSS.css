@@ -20,6 +20,19 @@
     text-decoration: none;
 }
 
+#headtagname{
+    font-size: 1.15rem;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#menutag{
+    font-size: 1.15rem;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
 #headtag:hover{
     border-bottom: 2px white solid;
     transition: all ease 0.5s 0s;

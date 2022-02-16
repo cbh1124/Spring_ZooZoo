@@ -35,8 +35,8 @@
         </a>
     </div>
     <div class="p-2 mb-3">
-        <span id="headtag" th:if="${session.loginDTO != null}"
-              th:text="${'<<'+session.loginDTO.mid}+'님 안녕하세요!>>'"></span>
+        <span id="headtagname" th:if="${session.loginDTO != null}"
+              th:text="${'<<'+session.loginDTO.mid}+'님 안녕하세요!>>'" disabled></span>
         <a th:if="${session.loginDTO != null}" id="headtag" th:href="@{/Member/Myinfo/}">
             마이페이지
         </a>
@@ -45,5 +45,33 @@
         </a>
     </div>
 </div>
+<div class="container" th:if="${session.loginDTO != null}">
+    <div class="row">
+        <div class="col-md-3">
+            <a th:href="@{/LossBoardlist}" id="menutag">
+                <h4 class="text-center">유기</h4>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a th:href="@{/ShareBoardList}" id="menutag">
+                <h4 class="text-center">분양</h4>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a th:href="@{/hospitalboard}" id="menutag">
+                <h4 class="text-center">병원</h4>
+            </a>
+        </div>
+        <div class="col-md-3">
+            <a th:href="@{/freeboard}" id="menutag">
+                <h4 class="text-center">자유</h4>
+            </a>
+        </div>
+    </div>
+</div>
+<br>
+<div th:if="${session.loginDTO != null}" style="border: 1px solid white;"></div>
+<br>
+
 </body>
 </html>
