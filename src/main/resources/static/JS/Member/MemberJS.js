@@ -90,7 +90,9 @@ function mpwupdate(mno){
                 alert("정보가 수정되었습니다");
                 location.href="/Member/Myinfo";
             } else {
-                alert("오류발생");
+                $("#pwfailmsg").html("비밀번호가 일치하지 않습니다");
+                $("#tdmpw").val("");
+                $("#newmpw").val("");
             }
         }
     });
