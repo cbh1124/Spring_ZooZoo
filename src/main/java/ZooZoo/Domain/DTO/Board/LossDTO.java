@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LossDTO {
+public class LossDTO{
 
     private String ABDM_IDNTFY_NO; //유기고유번호 (pk)
     private String SIGUN_CD; //시군코드
@@ -45,5 +45,6 @@ public class LossDTO {
     private String THUMB_IMAGE_COURS; //썸네일이미지경로
     private String REFINE_WGS84_LAT; //WGS84위도
     private String REFINE_WGS84_LOGT; //WGS84경도
+
 
 }
