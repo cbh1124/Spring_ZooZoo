@@ -46,28 +46,28 @@
     </div>
 </div>
 <div class="container" th:if="${session.loginDTO != null}">
-    <div class="row">
-        <div class="col-md-3">
-            <a th:href="@{/LossBoardlist}" id="menutag">
-                <h4 class="text-center">유기</h4>
+    <ul class="d-flex justify-content-between">
+        <li>
+            <a th:href="@{/LossBoardlist}" style="text-decoration: none;">
+                <h4 id="menutag" class="text-center">유기</h4>
             </a>
-        </div>
-        <div class="col-md-3">
-            <a th:href="@{/ShareBoardList}" id="menutag">
-                <h4 class="text-center">분양</h4>
+        </li>
+        <li>
+            <a th:href="@{/ShareBoardList}" style="text-decoration: none;">
+                <h4  id="menutag" class="text-center">분양</h4>
             </a>
-        </div>
-        <div class="col-md-3">
-            <a th:href="@{/hospitalboard}" id="menutag">
-                <h4 class="text-center">병원</h4>
+        </li>
+        <li>
+            <a th:href="@{/hospitalboard}" style="text-decoration: none;">
+                <h4 id="menutag" class="text-center">병원</h4>
             </a>
-        </div>
-        <div class="col-md-3">
-            <a th:href="@{/freeboard}" id="menutag">
-                <h4 class="text-center">자유</h4>
+        </li>
+        <li>
+            <a th:href="@{/freeboard}" style="text-decoration: none;">
+                <h4 id="menutag" class="text-center">자유</h4>
             </a>
-        </div>
-    </div>
+        </li>
+    </ul>
 </div>
 <br>
 <div th:if="${session.loginDTO != null}" style="border: 1px solid white;"></div>

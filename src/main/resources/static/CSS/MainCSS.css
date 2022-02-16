@@ -7,6 +7,8 @@
     border: solid 1px black;
 }*/
 
+li { list-style:none; }
+
 #head_1{
     height: 5.9028vh;
 }
@@ -28,11 +30,11 @@
 }
 
 #menutag{
-    font-size: 1.15rem;
+    font-size: 1.5rem;
     color: white;
     font-weight: bold;
-    text-decoration: none;
 }
+
 #headtag:hover{
     border-bottom: 2px white solid;
     transition: all ease 0.5s 0s;
