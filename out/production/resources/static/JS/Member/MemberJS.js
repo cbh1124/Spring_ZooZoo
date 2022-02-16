@@ -33,6 +33,7 @@ function mdelete(){
         success: function(result){
             if (result == 1){
                 location.href = "/Member/Logout"
+                alert("회원탈퇴가 완료되었습니다.")
             } else {
                 $("#deletemsg").html("비밀번호가 일치하지 않습니다.");
             }

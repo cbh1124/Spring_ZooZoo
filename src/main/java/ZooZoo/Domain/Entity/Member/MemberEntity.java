@@ -35,11 +35,11 @@ public class MemberEntity extends DateEntity {
     private String maddress;
 
     //게시판 엔티티와 양방향
-    @OneToMany(mappedBy = "memberEntity")
+    @OneToMany(mappedBy = "memberEntity", cascade = CascadeType.ALL)
     private List<BoardEntity> boardEntities = new ArrayList<>();
 
     //댓글 엔티티 매핑
-    @OneToMany(mappedBy = "memberEntity2")
+    @OneToMany(mappedBy = "memberEntity2", cascade = CascadeType.ALL)
     private List<ReplyEntity> replyEntities = new ArrayList<>();
 
 }

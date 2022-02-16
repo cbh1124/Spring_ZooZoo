@@ -29,10 +29,10 @@
 </head>
 
 <body style="  background-color: #ff7f50;">
-
 <div th:replace="Header.html :: header"></div>
 
 <section class="meetings-page" id="meetings">
+
     <div class="container">
         <div class="row">
             <div class="col-md-3">
@@ -48,8 +48,10 @@
                 <a th:href="@{/freeboard}"><h4 class="text-center">자유</h4></a>
             </div>
         </div>
-        <hr>
-        <br>
+    </div>
+    <hr>
+    <br>
+    <div class="container">
         <form action="/LossBoardlist" method="get">
             <div class="row">
                 <div class="col-md-2 d-flex"> <!-- d-flex-->
@@ -131,7 +133,7 @@
         <div class="row">
             <div class="col-lg-3 templatemo-item-col" th:each="lossDTO : ${parsesPage}">
                 <div class="meeting-item">
-                    <div class="thumblist">
+                    <div class="thumblist" style="border-radius:20px;">
                         <a th:href="@{ '/Board/Loss/LossBoardView/' + ${lossDTO.ABDM_IDNTFY_NO} } ">
                             <img class="image-thumbnail" th:src="${lossDTO.IMAGE_COURS}" alt="">
                         </a>
@@ -279,6 +281,7 @@
         $(window).scroll(function () {
           checkSection();
         });
+
 
 
 
