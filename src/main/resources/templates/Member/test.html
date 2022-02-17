@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace = "Header.html :: header"></div>
+<button onclick="q1()">업데이트</button>
+<table class="table">
+    <thead>
+    <tr>
+        <td>기업명</td>
+        <td>사업자등록번호</td>
+    </tr>
+    </thead>
+    <tbody id="tname">
+    </tbody>
+</table>
+
+<script th:src = "@{/JS/Member/Company.js}"></script>
+</body>
+</html>

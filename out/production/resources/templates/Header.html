@@ -33,6 +33,9 @@
         <a th:if="${session.loginDTO == null}" id="headtag" th:href="@{/Member/SignUp}">
             회원가입
         </a>
+        <a id="headtag" th:href="@{/rooms}">
+            채팅
+        </a>
     </div>
     <div class="p-2 mb-3">
         <span id="headtagname" th:if="${session.loginDTO != null}"
