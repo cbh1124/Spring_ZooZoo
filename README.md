@@ -172,21 +172,25 @@ implementation
 
 ## 7. 메인기능 상세설명
 ### 7.1 옵션 및 키워드 검색 (동물병원 게시판)
-- 실행순서 : 검색 조건을 Select box에서 선택한다.(영업상태, 이름 or 주소) -> 검색할 키워드를 입력한다. -> 검색 버튼을 누른다.
-- 코드
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">       
+
 ![image](https://user-images.githubusercontent.com/87436495/155255446-7c91f924-3985-4846-8546-76f2a9f20ace.png)
-
-
+  
+</div>
+</details>
 
 ### 7.2 파일 첨부 Drag & Drop
-- 실행순서 : 
+<details>
+<summary>여기를 눌러주세요</summary>
+<div markdown="1">       
 
 ![image](https://user-images.githubusercontent.com/87436495/155256084-faf0a671-92b0-487e-b546-7836fb296ba2.png)
 ![image](https://user-images.githubusercontent.com/87436495/155256138-1413a73b-9dab-45ab-be01-f5112ee55983.png)
-
-
-
-
+  
+</div>
+</details>
 
 ## 8. 보완할 점
 - 모든 게시판에 무한 계층형 댓글 기능 추가 (현재 일부 페이지만 1depth까지 대댓글 구현)
